@@ -47,33 +47,37 @@ class TopicListView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var date = DateTime.fromMicrosecondsSinceEpoch(
                       topics[index].createDate!.millisecondsSinceEpoch);
-                  // DateFormat dateFormat = DateFormat.yMMMd('th');
-                  // var date = dateFormat.format(DateFormat("yyyy-MM-dd").parse(
-                  //     DateTime.fromMillisecondsSinceEpoch(
-                  //             topics[index].createDate!.millisecondsSinceEpoch)
-                  //         .toString()));
-                  return Card(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        ListTile(
-                          leading: Icon(Icons.album),
-                          title: Text('${topics[index].topicTitle}'),
-                          subtitle: Text('${topics[index].topicDetail}'),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text('${DateFormat('dd/MM/yyy').format(date)}'),
-                            const SizedBox(width: 8),
-                            TextButton(
-                              child: Text('อ่านต่อ ... '),
-                              onPressed: () {/* ... */},
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                        ),
-                      ],
+
+                  return GestureDetector(
+                    child: Card(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            leading: Icon(Icons.album),
+                            title: Text('${topics[index].topicTitle}'),
+                            subtitle: Text('${topics[index].topicDetail}'),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text('${DateFormat('dd/MM/yyy').format(date)}'),
+                              const SizedBox(width: 8),
+                              TextButton(
+                                child: Text('อ่านต่อ ... '),
+                                onPressed: () {/* ... */},
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TopicDetailView(topics[index]),
+                      ),
                     ),
                   );
                 },

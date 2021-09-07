@@ -6,3 +6,5 @@ abstract class TopicFormState {}
 class TopicFormInitialState extends TopicFormState {}
 
 class TopicFormSubmitSuccess extends TopicFormState {}
+
+class TopicSubmitFailed extends TopicFormState {}

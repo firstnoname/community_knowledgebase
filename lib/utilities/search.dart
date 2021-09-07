@@ -1,5 +1,8 @@
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/views/knowledge_detail/knowledge_detail_view.dart';
+import 'package:community_knowledgebase/views/verification_page/bloc/verification_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Search extends SearchDelegate {
   Knowledge? selectedResult;
@@ -54,8 +57,17 @@ class Search extends SearchDelegate {
         return ListTile(
           title: Text(suggestionList[index].knowledgeTitle!),
           onTap: () {
-            selectedResult = suggestionList[index];
-            showResults(context);
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => KnowledgeDetailView(
+                      suggestionList[index],
+                      () => BlocProvider.of<VerificationBloc>(context)
+                          .add(VerficationInitial())),
+                ));
+            // selectedResult = suggestionList[index];
+            // showResults(context);
           },
         );
       },

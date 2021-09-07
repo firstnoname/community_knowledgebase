@@ -4,3 +4,7 @@ part of 'knowledge_form_bloc.dart';
 abstract class KnowledgeFormState {}
 
 class KnowledgeFormInitialState extends KnowledgeFormState {}
+
+class KnowledgeAddSuccess extends KnowledgeFormState {}
+
+class KnowledgeFormFailed extends KnowledgeFormState {}

@@ -5,4 +5,4 @@ abstract class TopicListState {}
 
 class TopicListInitialState extends TopicListState {}
 
-class GetToplicsSuccess extends TopicListState {}
+class GetTopicsSuccess extends TopicListState {}

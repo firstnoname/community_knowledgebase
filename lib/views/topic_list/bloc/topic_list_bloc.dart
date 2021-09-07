@@ -28,7 +28,7 @@ class TopicListBloc extends BaseBloc<TopicListEvent, TopicListState> {
     if (event is TopicListInitial) {
       print('bloc init');
       _topics = await TopicServices().readTopics();
-      yield GetToplicsSuccess();
+      yield GetTopicsSuccess();
     }
   }
 }

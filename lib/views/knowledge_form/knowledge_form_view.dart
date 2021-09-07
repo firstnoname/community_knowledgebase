@@ -36,6 +36,12 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
     return BlocProvider<KnowledgeFormBloc>(
       create: (context) => KnowledgeFormBloc(context),
       child: BlocBuilder<KnowledgeFormBloc, KnowledgeFormState>(
+        buildWhen: (previous, current) {
+          if (current is KnowledgeAddSuccess) {
+            Navigator.pop(context);
+          }
+          return true;
+        },
         builder: (context, state) {
           Knowledge knowledgeData =
               context.read<KnowledgeFormBloc>().knowledgeData;

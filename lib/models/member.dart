@@ -39,6 +39,10 @@ class Member {
         memberPassword: json['member_password'],
       );
 
+  factory Member.fromMinimalJson(dynamic json) => Member(
+      memberId: json['member_id'],
+      memberDisplayname: json['member_display_name']);
+
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
     // map['member_id'] = memberId;
@@ -52,6 +56,13 @@ class Member {
     map['member_email'] = memberEmail;
     map['member_username'] = memberUsername;
     map['member_password'] = memberPassword;
+    return map;
+  }
+
+  Map<String, dynamic> toMinimalJson() {
+    var map = <String, dynamic>{};
+    map['user_id'] = memberId;
+    map['member_display_name'] = memberDisplayname;
     return map;
   }
 }

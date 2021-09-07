@@ -44,8 +44,16 @@ class KnowledgeFormBloc
         memberDisplayname: _currentUser.displayName,
         memberId: _currentUser.uid,
       );
-      KnowledgeServices().addKnowledge(knowledgeInfo!);
+
+      try {
+        var result = await KnowledgeServices().addKnowledge(knowledgeInfo!);
+        if (result != null) yield KnowledgeAddSuccess();
+      } catch (e) {
+        print('add knowledge failed -> $e');
+        yield KnowledgeFormFailed();
+      }
     } else if (event is KnowledgeChangedCategory) {
+      print('selected category -> ${categories[event.index]}');
       knowledgeInfo?.category = categories[event.index];
     }
   }

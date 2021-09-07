@@ -47,7 +47,7 @@ class KnowledgeServices {
     return knowledgeList;
   }
 
-  Future<Knowledge> addKnowledge(Knowledge knowledge, {List<File>? pictures}) {
+  Future<Knowledge?> addKnowledge(Knowledge knowledge, {List<File>? pictures}) {
     CollectionReference knowledgebaseCollection =
         FirebaseFirestore.instance.collection('knowledgebase');
     return knowledgebaseCollection.add(knowledge.toJson()).then((value) {
@@ -55,6 +55,7 @@ class KnowledgeServices {
       return knowledge;
     }).catchError((e) {
       print('Add knowledge failed -> $e');
+      return null;
     });
   }
 

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_knowledgebase/models/category.dart';
 import 'package:community_knowledgebase/models/models.dart';
 
@@ -11,6 +12,7 @@ class Knowledge {
   List<String>? images;
   Member? member;
   String? status;
+  Timestamp? timestamp;
 
   Knowledge({
     this.knowledgeId,
@@ -22,6 +24,7 @@ class Knowledge {
     this.images,
     this.member,
     this.status,
+    this.timestamp,
   });
 
   factory Knowledge.fromJson(dynamic json) {
@@ -35,10 +38,11 @@ class Knowledge {
     knowledgeObject.clip =
         json['clip'] != null ? Clip.fromJson(json['clip']) : null;
     knowledgeObject.member =
-        json['member'] != null ? Member.fromJson(json['member']) : null;
+        json['member'] != null ? Member.fromMinimalJson(json['member']) : null;
     knowledgeObject.images =
         json['images'] != null ? json['images'].cast<String>() : [];
     knowledgeObject.status = json['status'];
+    knowledgeObject.timestamp = json['timestamp'];
     return knowledgeObject;
   }
 
@@ -48,9 +52,10 @@ class Knowledge {
         'knowledge_content': knowledgeContent ?? '',
         if (category != null) 'category': category!.toJson(),
         if (clip != null) 'clip': clip!.toJson(),
-        if (member != null) 'member': member!.toJson(),
+        if (member != null) 'member': member!.toMinimalJson(),
         'images': images ?? [],
         'status': status ?? 'รออนุมัติ',
+        'timestamp': timestamp ?? Timestamp.now(),
       };
 }
 

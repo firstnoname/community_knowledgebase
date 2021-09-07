@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_knowledgebase/bloc/base_bloc.dart';
+import 'package:community_knowledgebase/models/models.dart';
 import 'package:community_knowledgebase/models/topic.dart';
 import 'package:community_knowledgebase/services/topic_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -19,6 +21,8 @@ class TopicFormBloc extends BaseBloc<TopicFormEvent, TopicFormState> {
 
   Topic? topic = Topic();
 
+  late Member _currentUser;
+
   @override
   Stream<TopicFormState> mapEventToState(
     TopicFormEvent event,
@@ -26,9 +30,17 @@ class TopicFormBloc extends BaseBloc<TopicFormEvent, TopicFormState> {
     if (event is TopicFormInit) {
       yield TopicFormInitialState();
     } else if (event is TopicFormSubmitted) {
+      _currentUser = appManagerBloc.member;
       topic!.createDate = Timestamp.now();
-      var savedTopic = await TopicServices().addTopic(topic!);
-      yield TopicFormSubmitSuccess();
+      topic!.member = Member(
+        memberDisplayname: _currentUser.memberDisplayname,
+        memberId: _currentUser.memberId,
+      );
+      var addTopic = await TopicServices().addTopic(topic!);
+      if (addTopic != null)
+        yield TopicFormSubmitSuccess();
+      else
+        yield TopicSubmitFailed();
     }
   }
 }
