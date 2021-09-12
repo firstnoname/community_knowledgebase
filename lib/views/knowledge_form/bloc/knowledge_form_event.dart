@@ -7,8 +7,9 @@ class KnowledgeFormInitial extends KnowledgeFormEvent {}
 
 class KnowledgeFormSubmitted extends KnowledgeFormEvent {
   final Knowledge knowledge;
+  final MediaInfo? image;
 
-  KnowledgeFormSubmitted(this.knowledge);
+  KnowledgeFormSubmitted(this.knowledge, {this.image});
 }
 
 class KnowledgeChangedCategory extends KnowledgeFormEvent {
@@ -16,3 +17,9 @@ class KnowledgeChangedCategory extends KnowledgeFormEvent {
 
   KnowledgeChangedCategory(this.index);
 }
+
+class KnowledgeFormEventPressProvince extends KnowledgeFormEvent {}
+
+class KnowledgeFormEventPressDistrict extends KnowledgeFormEvent {}
+
+class KnowledgeFormEventPressSubDistrict extends KnowledgeFormEvent {}

@@ -29,6 +29,11 @@ class KnowledgeDetailBloc
   ) async* {
     if (event is KnowledgeDetailInitial) {
       _member = appManagerBloc.member;
+      // update view counter.
+      Member user = appManagerBloc.member;
+      user.memberStatus == 'user'
+          ? KnowledgeServices().increaseView(knowledge.knowledgeId!)
+          : null;
       yield KnowledgeDetailInitialState();
     } else if (event is KnowledgeAccepted) {
       String acceptedKnowledgeId = '';

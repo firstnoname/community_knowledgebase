@@ -9,10 +9,12 @@ class Knowledge {
   String? knowledgeContent;
   Category? category;
   Clip? clip;
-  List<String>? images;
+  List<String> images;
   Member? member;
   String? status;
   Timestamp? timestamp;
+  Address? address;
+  int views;
 
   Knowledge({
     this.knowledgeId,
@@ -21,30 +23,32 @@ class Knowledge {
     this.knowledgeContent,
     this.category,
     this.clip,
-    this.images,
+    required this.images,
     this.member,
     this.status,
     this.timestamp,
+    this.address,
+    this.views = 0,
   });
 
-  factory Knowledge.fromJson(dynamic json) {
-    var knowledgeObject = Knowledge();
-    knowledgeObject.knowledgeId = json['id'];
-    knowledgeObject.knowledgeTitle = json['knowledge_title'];
-    knowledgeObject.knowledgeDesciption = json['knowledge_description'];
-    knowledgeObject.knowledgeContent = json['knowledge_content'];
-    knowledgeObject.category =
-        json['category'] != null ? Category.fromJson(json['category']) : null;
-    knowledgeObject.clip =
-        json['clip'] != null ? Clip.fromJson(json['clip']) : null;
-    knowledgeObject.member =
-        json['member'] != null ? Member.fromMinimalJson(json['member']) : null;
-    knowledgeObject.images =
-        json['images'] != null ? json['images'].cast<String>() : [];
-    knowledgeObject.status = json['status'];
-    knowledgeObject.timestamp = json['timestamp'];
-    return knowledgeObject;
-  }
+  Knowledge.fromJson(dynamic json)
+      : knowledgeId = json['id'],
+        knowledgeTitle = json['knowledge_title'],
+        knowledgeDesciption = json['knowledge_description'],
+        knowledgeContent = json['knowledge_content'],
+        category = json['category'] != null
+            ? Category.fromJson(json['category'])
+            : null,
+        clip = json['clip'] != null ? Clip.fromJson(json['clip']) : null,
+        member = json['member'] != null
+            ? Member.fromMinimalJson(json['member'])
+            : null,
+        images = json['images'] != null ? json['images'].cast<String>() : [],
+        status = json['status'],
+        timestamp = json['timestamp'],
+        address =
+            json['address'] != null ? Address.fromJson(json['address']) : null,
+        views = json['views'] ?? 0;
 
   Map<String, dynamic> toJson() => {
         'knowledge_title': knowledgeTitle ?? '',
@@ -53,9 +57,11 @@ class Knowledge {
         if (category != null) 'category': category!.toJson(),
         if (clip != null) 'clip': clip!.toJson(),
         if (member != null) 'member': member!.toMinimalJson(),
-        'images': images ?? [],
+        'images': images,
         'status': status ?? 'รออนุมัติ',
         'timestamp': timestamp ?? Timestamp.now(),
+        'address': address != null ? address!.toJson() : null,
+        'views': views,
       };
 }
 

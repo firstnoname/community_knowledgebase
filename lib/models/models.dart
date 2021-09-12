@@ -4,3 +4,6 @@ export 'clip.dart';
 export 'member.dart';
 export 'topic.dart';
 export 'comment.dart';
+export 'address/address.dart';
+export 'address/base_address.dart';
+export 'announcement.dart';

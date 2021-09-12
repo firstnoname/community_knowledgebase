@@ -92,6 +92,21 @@ class KnowledgeDetailView extends StatelessWidget {
                   ),
                   SizedBox(height: 24),
                   Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: knowledgeDetail.images
+                          .map((image) => Image.network(
+                                image,
+                                fit: BoxFit.contain,
+                                height: MediaQuery.of(context).size.width / 5,
+                                width: MediaQuery.of(context).size.width / 5,
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 48),
                     child: Text(
                       knowledgeDetail.knowledgeContent!,

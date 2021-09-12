@@ -42,8 +42,12 @@ class UserRegisterView extends StatelessWidget {
                         children: <Widget>[
                           buildTextFieldEmail(ctx),
                           buildTextFieldDisplayName(ctx),
+                          // buildSelectProvince(ctx),
+                          // buildSelectDistrict(ctx),
+                          // buildSelectSubDistrict(ctx),
                           buildTextFieldPassword(ctx),
                           buildTextFieldPasswordConfirm(ctx),
+
                           buildButtonSignUp(ctx)
                         ],
                       ),
@@ -116,6 +120,18 @@ class UserRegisterView extends StatelessWidget {
         validator: (value) {
           if (value == null || value.isEmpty) return 'Please enter some text';
         },
+      ),
+    );
+  }
+
+  Container buildSelectProvince(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(12),
+      margin: EdgeInsets.only(top: 12),
+      decoration: BoxDecoration(
+          color: Colors.yellow[50], borderRadius: BorderRadius.circular(16)),
+      child: DropdownButton(
+        items: [],
       ),
     );
   }

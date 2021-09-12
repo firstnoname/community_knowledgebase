@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:community_knowledgebase/bloc/base_bloc.dart';
 import 'package:community_knowledgebase/views/index_page/index_view.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +20,7 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
   ) async* {
     switch (event.runtimeType) {
       case LoginEmailPasswordSubmitted:
+        await uiFeedback.showLoading();
         try {
           var userCredential =
               await appManagerBloc.userAuth.signInWithEmail(email!, password!);
@@ -42,7 +42,7 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
           print('login failed -> ${e.toString()}');
           yield LoginFailed();
         } finally {
-          // await uiFeedback.hideLoading();
+          await uiFeedback.hideLoading();
         }
         break;
     }

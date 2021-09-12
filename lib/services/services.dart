@@ -1,8 +1,7 @@
-class Services {
-  ///[th] base url ของ service
-  static const corsDemo = 'https://cors-anywhere.herokuapp.com/';
-  static const url = '${corsDemo}http://localhost/community_knowledgebase/';
-
-  ///[th] url สำหรับเป็น base ในการดาวน์โหลดภาพ
-  // static const downloadUrl = '$url/download?file=';
-}
+export 'address_services.dart';
+export 'category_services.dart';
+export 'comment_services.dart';
+export 'knowledge_services.dart';
+export 'media_services.dart';
+export 'member_services.dart';
+export 'topic_services.dart';

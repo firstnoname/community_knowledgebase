@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:html' as html;
+import 'dart:typed_data';
 import 'package:community_knowledgebase/models/models.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as Path;
 
 import 'package:community_knowledgebase/models/knowledge.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:mime_type/mime_type.dart';
+import 'package:path_provider/path_provider.dart';
 
 // ignore: must_be_immutable
 class KnowledgeFormView extends StatefulWidget {
@@ -23,10 +24,8 @@ class KnowledgeFormView extends StatefulWidget {
 }
 
 class _KnowledgeFormViewState extends State<KnowledgeFormView> {
-  Image? _imageWidget1;
-  Image? _imageWidget2;
-  File? _image1;
-  File? _image2;
+  Image? _imageWidget;
+  MediaInfo? mediaData;
 
   int? _indexCategory = 0;
 
@@ -171,69 +170,21 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                     color: Colors.grey[200],
                                     child: Stack(
                                       children: [
-                                        _imageWidget1 != null
-                                            ? _imageWidget1!
-                                            : Container(child: Text('Empty')),
-                                        IconButton(
-                                          onPressed: () async {
-                                            _imageWidget1 =
-                                                await getSingleImage();
-                                            if (_imageWidget1 != null)
-                                              setState(() {});
-                                          },
-                                          icon: Icon(Icons.image),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    color: Colors.grey[200],
-                                    child: Stack(
-                                      children: [
-                                        _imageWidget2 != null
-                                            ? _imageWidget2!
+                                        _imageWidget != null
+                                            ? Center(child: _imageWidget!)
                                             : Container(),
-                                        IconButton(
-                                          onPressed: () async {
-                                            _imageWidget2 =
-                                                await getSingleImage();
-                                            setState(() {});
-                                          },
-                                          icon: Icon(Icons.image),
+                                        Center(
+                                          child: IconButton(
+                                            onPressed: () async {
+                                              _imageWidget = await getImage();
+                                              setState(() {});
+                                            },
+                                            icon: Icon(Icons.image),
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  // ----------------------------------------- //
-                                  // Container(
-                                  //   color: Colors.grey[200],
-                                  //   child: Stack(
-                                  //     children: [
-                                  //       _image1 != null
-                                  //           ? Image.file(_image1!)
-                                  //           : Container(),
-                                  //       IconButton(
-                                  //         onPressed: () async {
-                                  //           _image1 = (await filePicker())!;
-                                  //         },
-                                  //         icon: Icon(Icons.image),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  // Container(
-                                  //   color: Colors.grey[200],
-                                  //   child: Stack(
-                                  //     children: [
-                                  //       IconButton(
-                                  //         onPressed: () async {
-                                  //           _image2 = (await filePicker())!;
-                                  //         },
-                                  //         icon: Icon(Icons.image),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),
@@ -244,9 +195,9 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                           onPressed: () {
                             print(
                                 'knowledge data title -> ${knowledgeData.knowledgeTitle}');
-                            context
-                                .read<KnowledgeFormBloc>()
-                                .add(KnowledgeFormSubmitted(knowledgeData));
+                            context.read<KnowledgeFormBloc>().add(
+                                KnowledgeFormSubmitted(knowledgeData,
+                                    image: mediaData));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -265,19 +216,28 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
     );
   }
 
-  Future<File?> filePicker() async {
-    File _image = File('');
+  Future<List<Image?>> getMultiImages() async {
+    List? fromPicker =
+        await ImagePickerWeb.getMultiImages(outputType: ImageType.bytes);
 
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: false);
-
-    if (result != null) {
-      _image = File(result.files.first.path!);
-    } else {
-      // User canceled the picker
-
+    if (fromPicker != null) {
+      Uint8List tempImage = fromPicker.first as Uint8List;
+      Directory tempDir = await getTemporaryDirectory();
+      // final file = await File(tempImage).create();
     }
-    return _image;
+
+    return fromPicker as List<Image>;
+  }
+
+  Future<Image?> getImage() async {
+    mediaData = await ImagePickerWeb.getImageInfo;
+
+    String mimeType = mime(Path.basename(mediaData!.fileName!))!;
+
+    html.File mediaFile =
+        html.File(mediaData!.data!, mediaData!.fileName!, {'type': mimeType});
+
+    return _imageWidget = Image.memory(mediaData!.data!);
   }
 
   Future<Image> getSingleImage() async {

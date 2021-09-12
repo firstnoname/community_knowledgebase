@@ -3,13 +3,23 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_knowledgebase/models/knowledge.dart';
-import 'package:community_knowledgebase/services/services.dart';
+import 'package:community_knowledgebase/services/base_url.dart';
+import 'package:community_knowledgebase/services/image_services.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 
 class KnowledgeServices {
   static final collectionName = "knowledgebase";
   // -----------------------------  Firebase  --------------------------------- //
+
+  Future increaseView(String knowledgeId) async {
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(knowledgeId)
+        .update({'views': FieldValue.increment(1)});
+  }
+
   Future<String> acceptKnowledge(String knolwedgeId) async {
     await FirebaseFirestore.instance
         .collection(collectionName)
@@ -47,11 +57,25 @@ class KnowledgeServices {
     return knowledgeList;
   }
 
-  Future<Knowledge?> addKnowledge(Knowledge knowledge, {List<File>? pictures}) {
+  Future<Knowledge?> addKnowledge(Knowledge knowledge,
+      {List<File>? pictures, MediaInfo? image}) async {
     CollectionReference knowledgebaseCollection =
         FirebaseFirestore.instance.collection('knowledgebase');
-    return knowledgebaseCollection.add(knowledge.toJson()).then((value) {
+    return await knowledgebaseCollection
+        .add(knowledge.toJson())
+        .then((value) async {
       knowledge.knowledgeId = value.id;
+      if (image != null) {
+        var path = "knowledge_images/${value.id}";
+
+        var imagePath = await ImageServices().uploadFile(image.data!, path);
+        knowledge.images.add(imagePath);
+        // update announcement in firebase.
+        await FirebaseFirestore.instance
+            .collection(collectionName)
+            .doc(knowledge.knowledgeId)
+            .update({'images': knowledge.images});
+      }
       return knowledge;
     }).catchError((e) {
       print('Add knowledge failed -> $e');
@@ -76,7 +100,7 @@ class KnowledgeServices {
   }
 
   static Future<Null> readKnowledgeSQL() async {
-    String url = '${Services.url}knowledgebase_read.php';
+    String url = '${BaseUrl.url}knowledgebase_read.php';
     String cors = 'https://cors-anywhere.herokuapp.com/';
     String testUrl = '${cors}https://api.publicapis.org/entries';
     try {
