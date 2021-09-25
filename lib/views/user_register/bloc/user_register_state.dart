@@ -10,3 +10,11 @@ class UserRegisterSuccess extends UserRegisterState {}
 class UserRegisterFailed extends UserRegisterState {}
 
 class UserRegisterStateGetProvinceSuccess extends UserRegisterState {}
+
+class UserRegisterStatePrepareAddressSuccess extends UserRegisterState {
+  final List<BaseAddress> subDistrictList;
+  final BaseAddress currentSubDistrict;
+
+  UserRegisterStatePrepareAddressSuccess(
+      this.subDistrictList, this.currentSubDistrict);
+}

@@ -19,14 +19,19 @@ class AnnouncementCard extends StatelessWidget {
           child: Container(
             color: Colors.white,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 announcement.image != null
                     ? Expanded(
                         flex: 3,
-                        child: Image.network(
-                          announcement.image!,
-                          fit: BoxFit.contain,
+                        child: Row(
+                          children: [
+                            Image.network(
+                              announcement.image!,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                            ),
+                          ],
                         ),
                       )
                     : Container(),

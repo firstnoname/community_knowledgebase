@@ -1,3 +1,5 @@
+import 'package:community_knowledgebase/models/models.dart';
+
 class Member {
   String? memberId;
   String? memberDisplayname;
@@ -10,6 +12,8 @@ class Member {
   String? memberEmail;
   String? memberUsername;
   String? memberPassword;
+  Address? memberAddress;
+  String? memberRole;
 
   Member({
     this.memberId,
@@ -23,6 +27,7 @@ class Member {
     this.memberEmail,
     this.memberUsername,
     this.memberPassword,
+    this.memberAddress,
   });
 
   factory Member.fromJson(dynamic json) => Member(
@@ -37,6 +42,9 @@ class Member {
         memberEmail: json['member_email'],
         memberUsername: json['member_username'],
         memberPassword: json['member_password'],
+        memberAddress: json['member_address'] != null
+            ? Address.fromJson(json['member_address'])
+            : null,
       );
 
   factory Member.fromMinimalJson(dynamic json) => Member(
@@ -56,6 +64,9 @@ class Member {
     map['member_email'] = memberEmail;
     map['member_username'] = memberUsername;
     map['member_password'] = memberPassword;
+    map['member_address'] =
+        memberAddress != null ? memberAddress!.toJson() : null;
+
     return map;
   }
 

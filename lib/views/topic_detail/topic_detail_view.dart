@@ -59,7 +59,7 @@ class _TopicDetailViewState extends State<TopicDetailView> {
                                   color: Colors.black.withOpacity(0.6)),
                             ),
                             subtitle: Text(
-                              'วันที่ 04-08-2021',
+                              'วันที่ ${DateFormat('dd/MM/yyyy').format(DateTime.fromMillisecondsSinceEpoch(widget.topic.createDate!.millisecondsSinceEpoch))}',
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.6)),
                             ),

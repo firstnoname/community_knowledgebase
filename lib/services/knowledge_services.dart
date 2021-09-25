@@ -39,13 +39,15 @@ class KnowledgeServices {
   }
 
   Future<List<Knowledge>> readKnowledgeList(
-      {String? status, String? categoryName}) async {
+      {String? status, String? categoryName, String? subDistrictId}) async {
     List<Knowledge> knowledgeList = [];
     print('status -> $status');
+    print('sub district id -> $subDistrictId');
     await FirebaseFirestore.instance
         .collection('knowledgebase')
         .where('status', isEqualTo: status)
         .where('category.category_name', isEqualTo: categoryName)
+        .where('address.sub_district.id', isEqualTo: subDistrictId)
         .get()
         .then((value) {
       print('docs value -> ${value.docs.length}');

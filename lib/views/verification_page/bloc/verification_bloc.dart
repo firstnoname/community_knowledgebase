@@ -19,14 +19,19 @@ class VerificationBloc extends BaseBloc<VerificationEvent, VerificationState> {
 
   get knowledgeList => _knowledgeList;
 
+  late Member _adminInfo;
+
   @override
   Stream<VerificationState> mapEventToState(
     VerificationEvent event,
   ) async* {
+    _adminInfo = appManagerBloc.member;
     if (event is VerficationInitial) {
       yield VerficationInprogress();
-      _knowledgeList = await KnowledgeServices()
-          .readKnowledgeList(status: KnowledgeStatus.pending);
+      _knowledgeList = await KnowledgeServices().readKnowledgeList(
+        status: KnowledgeStatus.pending,
+        subDistrictId: _adminInfo.memberAddress!.subDistrict!.id,
+      );
       print('knowledge list -> ${_knowledgeList.length}');
       yield VerificationPrepareSuccess();
     }

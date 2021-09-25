@@ -42,7 +42,7 @@ class LoginView extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Center(child: Text('Logo CAMT')),
+          Center(child: Image.asset('assets/images/camt_horizontal.jpg')),
           SizedBox(height: 36),
           TextFormField(
             decoration: InputDecoration(

@@ -13,4 +13,10 @@ class UserRegisterEventPressProvince extends UserRegisterEvent {}
 
 class UserRegisterEventPressDistrict extends UserRegisterEvent {}
 
-class UserRegisterEventPressSubDistrict extends UserRegisterEvent {}
+class UserRegisterEventPressSubDistrict extends UserRegisterEvent {
+  final BaseAddress selectedSubDistrict;
+
+  UserRegisterEventPressSubDistrict(this.selectedSubDistrict);
+}
+
+class UserRegisterEventPrepareAddress extends UserRegisterEvent {}

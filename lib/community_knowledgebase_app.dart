@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/bloc/blocs/app_manager_bloc.dart';
+import 'package:community_knowledgebase/utilities/app_themes.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'views/views.dart';
 
 class CommunityKnowledgebase extends StatelessWidget {
-  const CommunityKnowledgebase({Key? key}) : super(key: key);
+  CommunityKnowledgebase({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class CommunityKnowledgebase extends StatelessWidget {
       ],
       child: GestureDetector(
         child: MaterialApp(
+          theme: appTheme(context),
           builder: EasyLoading.init(),
           title: 'คลังความรู้ชุมชน',
           home: homePage(),

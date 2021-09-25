@@ -1,6 +1,7 @@
 import 'package:community_knowledgebase/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import 'bloc/knowledge_detail_bloc.dart';
 
@@ -86,7 +87,8 @@ class KnowledgeDetailView extends StatelessWidget {
                         child: Icon(Icons.people),
                       ),
                       title: Text(knowledgeDetail.member!.memberDisplayname!),
-                      subtitle: Text('วันที่ 20-08-2021'),
+                      subtitle: Text(
+                          'วันที่ ${DateFormat('dd/MM/yyyy').format(DateTime.fromMillisecondsSinceEpoch(knowledgeDetail.timestamp!.millisecondsSinceEpoch))}'),
                       isThreeLine: true,
                     ),
                   ),
