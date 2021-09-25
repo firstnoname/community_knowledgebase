@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import '../../models/models.dart';
+import '../../services/services.dart';
+import '../../services/user_auth.dart';
+
 import 'package:bloc/bloc.dart';
-import 'package:community_knowledgebase/models/models.dart';
-import 'package:community_knowledgebase/services/user_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +19,15 @@ class AppManagerBloc extends Bloc<AppManagerEvent, AppManagerState> {
   UserAuth get userAuth => _userAuth;
 
   User? _currentUser;
-
   User? get currentUser => _currentUser;
 
   Member? _member;
-
   get member => _member;
 
   bool registerState = false;
+
+  List<Category> _categories = [];
+  get categoreis => _categories;
 
   AppManagerBloc({AppManagerState? state, BuildContext? context})
       : super(state ?? AppManagerInitial()) {
@@ -40,6 +43,7 @@ class AppManagerBloc extends Bloc<AppManagerEvent, AppManagerState> {
   Stream<AppManagerState> mapEventToState(
     AppManagerEvent event,
   ) async* {
+    _categories = await CategoryServices().readCategories();
     if (event is AppManagerStarted) {
       if (_userAuth.isLoggedIn()) {
         try {

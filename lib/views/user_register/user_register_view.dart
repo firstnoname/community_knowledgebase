@@ -1,12 +1,29 @@
+import 'package:community_knowledgebase/models/address/base_address.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/user_register_bloc.dart';
 
-class UserRegisterView extends StatelessWidget {
+class UserRegisterView extends StatefulWidget {
   UserRegisterView({Key? key}) : super(key: key);
 
+  @override
+  _UserRegisterViewState createState() => _UserRegisterViewState();
+}
+
+class _UserRegisterViewState extends State<UserRegisterView> {
   final _formGK = GlobalKey<FormState>();
+
+  // var testItems = [
+  //   'Apple',
+  //   'Banana',
+  //   'Grapes',
+  //   'Orange',
+  //   'watermelon',
+  //   'Pineapple'
+  // ];
+
+  // String dropdownvalue = 'Apple';
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +31,9 @@ class UserRegisterView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Sign up", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.orange[200],
       ),
       body: BlocProvider<UserRegisterBloc>(
-        create: (ctx) => UserRegisterBloc(context),
+        create: (context) => UserRegisterBloc(context),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: width / 3, vertical: 48),
           color: Colors.green[50],
@@ -32,7 +48,7 @@ class UserRegisterView extends StatelessWidget {
               margin: EdgeInsets.all(32),
               padding: EdgeInsets.all(24),
               child: BlocBuilder<UserRegisterBloc, UserRegisterState>(
-                builder: (ctx, state) {
+                builder: (context, state) {
                   return Form(
                     key: _formGK,
                     child: SingleChildScrollView(
@@ -40,15 +56,14 @@ class UserRegisterView extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          buildTextFieldEmail(ctx),
-                          buildTextFieldDisplayName(ctx),
+                          buildTextFieldEmail(context),
+                          buildTextFieldDisplayName(context),
                           // buildSelectProvince(ctx),
                           // buildSelectDistrict(ctx),
-                          // buildSelectSubDistrict(ctx),
-                          buildTextFieldPassword(ctx),
-                          buildTextFieldPasswordConfirm(ctx),
-
-                          buildButtonSignUp(ctx)
+                          buildSelectSubDistrict(context),
+                          buildTextFieldPassword(context),
+                          buildTextFieldPasswordConfirm(context),
+                          buildButtonSignUp(context)
                         ],
                       ),
                     ),
@@ -119,6 +134,55 @@ class UserRegisterView extends StatelessWidget {
             BlocProvider.of<UserRegisterBloc>(context).displayName = value,
         validator: (value) {
           if (value == null || value.isEmpty) return 'Please enter some text';
+        },
+      ),
+    );
+  }
+
+  Container buildSelectSubDistrict(BuildContext context) {
+    List<BaseAddress> subDistrictItems;
+    BaseAddress currentSubDistrict;
+
+    return Container(
+      child: BlocBuilder<UserRegisterBloc, UserRegisterState>(
+        buildWhen: (previous, current) {
+          if (current is UserRegisterStatePrepareAddressSuccess)
+            return true;
+          else
+            return false;
+        },
+        builder: (context, state) {
+          if (state is UserRegisterStatePrepareAddressSuccess) {
+            subDistrictItems = state.subDistrictList;
+            currentSubDistrict = state.currentSubDistrict;
+            return subDistrictItems.length == 0
+                ? Container()
+                : Container(
+                    padding: EdgeInsets.all(12),
+                    margin: EdgeInsets.only(top: 12),
+                    decoration: BoxDecoration(
+                        color: Colors.yellow[50],
+                        borderRadius: BorderRadius.circular(16)),
+                    child: DropdownButton<BaseAddress>(
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      value: currentSubDistrict,
+                      items: subDistrictItems
+                          .map(
+                            (e) => DropdownMenuItem<BaseAddress>(
+                              value: e,
+                              child: Text('${e.name}'),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        context.read<UserRegisterBloc>().add(
+                              UserRegisterEventPressSubDistrict(value!),
+                            );
+                      },
+                    ),
+                  );
+          } else
+            return Container();
         },
       ),
     );

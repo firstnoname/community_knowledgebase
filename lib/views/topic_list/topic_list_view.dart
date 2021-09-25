@@ -61,7 +61,8 @@ class TopicListView extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              Text('${DateFormat('dd/MM/yyy').format(date)}'),
+                              Text(
+                                  'วันที่ ${DateFormat('dd/MM/yyyy').format(DateTime.fromMillisecondsSinceEpoch(topics[index].createDate!.millisecondsSinceEpoch))}'),
                               const SizedBox(width: 8),
                               TextButton(
                                 child: Text('อ่านต่อ ... '),

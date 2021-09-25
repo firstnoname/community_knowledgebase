@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:community_knowledgebase/bloc/base_bloc.dart';
 import 'package:community_knowledgebase/models/models.dart';
-import 'package:community_knowledgebase/services/address_services.dart';
+
 import 'package:community_knowledgebase/services/category_services.dart';
 import 'package:community_knowledgebase/services/knowledge_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,6 +28,8 @@ class KnowledgeFormBloc
 
   late User _currentUser;
 
+  late Member _member;
+
   List<Category> _categories = [];
   get categories => _categories;
 
@@ -35,6 +37,8 @@ class KnowledgeFormBloc
   Stream<KnowledgeFormState> mapEventToState(
     KnowledgeFormEvent event,
   ) async* {
+    _member = appManagerBloc.member;
+
     try {
       if (event is KnowledgeFormInitial) {
         _categories = await CategoryServices().readCategories();
@@ -47,6 +51,8 @@ class KnowledgeFormBloc
           memberDisplayname: _currentUser.displayName,
           memberId: _currentUser.uid,
         );
+        // set sub-district to knowledge info.
+        knowledgeInfo!.address = _member.memberAddress;
         if (knowledgeInfo!.category == null)
           knowledgeInfo!.category = categories[0];
         var result = await KnowledgeServices()

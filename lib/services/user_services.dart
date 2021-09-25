@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:community_knowledgebase/bloc/blocs/app_manager_bloc.dart';
 import 'package:community_knowledgebase/models/models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -18,15 +17,15 @@ class UserServices {
           );
   }
 
-  Future<Member> addUser(User userInfo, String displayName) async {
+  Future<Member> addUser(
+      User userInfo, String displayName, Address address) async {
     Member member = Member(
       memberDisplayname: displayName,
       memberEmail: userInfo.email,
       memberStatus: 'user',
       memberFirsname: '',
       memberLastname: '',
-
-      // TODO here เพิ่ม user ไป collection แล้วกำหนด user role.
+      memberAddress: address,
     );
 
     try {

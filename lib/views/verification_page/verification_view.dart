@@ -2,6 +2,7 @@ import 'package:community_knowledgebase/models/models.dart';
 import 'package:community_knowledgebase/utilities/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../views.dart';
 import 'bloc/verification_bloc.dart';
@@ -70,7 +71,8 @@ class _VerificationViewState extends State<VerificationView> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             TextButton(
-                              child: const Text('วันที่ 20-08-2021'),
+                              child: Text(
+                                  'วันที่ ${DateFormat('dd/MM/yyyy').format(DateTime.fromMillisecondsSinceEpoch(knowledgeList[index].timestamp!.millisecondsSinceEpoch))}'),
                               onPressed: () {/* ... */},
                             ),
                             const SizedBox(width: 8),

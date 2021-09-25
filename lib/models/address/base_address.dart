@@ -1,20 +1,22 @@
 class BaseAddress {
-  String id;
-  String name;
-  String type;
+  String? id;
+  String? name;
+  String? provinceId;
 
   BaseAddress({
-    required this.id,
-    required this.name,
-    required this.type,
+    this.id,
+    this.name,
+    this.provinceId,
   });
 
   factory BaseAddress.fromJson(dynamic json) => BaseAddress(
-      id: json['id'] ?? '', name: json['name'] ?? '', type: json['type'] ?? '');
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      provinceId: json['province_id'] ?? '');
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'type': type,
+        'province_id': provinceId,
       };
 }
