@@ -39,15 +39,15 @@ class KnowledgeServices {
   }
 
   Future<List<Knowledge>> readKnowledgeList(
-      {String? status, String? categoryName, String? subDistrictId}) async {
+      {String? status, String? categoryName, String? subDistrictName}) async {
     List<Knowledge> knowledgeList = [];
     print('status -> $status');
-    print('sub district id -> $subDistrictId');
+    print('sub district id -> $subDistrictName');
     await FirebaseFirestore.instance
         .collection('knowledgebase')
         .where('status', isEqualTo: status)
         .where('category.category_name', isEqualTo: categoryName)
-        .where('address.sub_district.id', isEqualTo: subDistrictId)
+        .where('address.sub_district.name', isEqualTo: subDistrictName)
         .get()
         .then((value) {
       print('docs value -> ${value.docs.length}');
@@ -60,19 +60,22 @@ class KnowledgeServices {
   }
 
   Future<Knowledge?> addKnowledge(Knowledge knowledge,
-      {List<File>? pictures, MediaInfo? image}) async {
+      {List<Uint8List>? imagesByte}) async {
     CollectionReference knowledgebaseCollection =
         FirebaseFirestore.instance.collection('knowledgebase');
     return await knowledgebaseCollection
         .add(knowledge.toJson())
         .then((value) async {
       knowledge.knowledgeId = value.id;
-      if (image != null) {
-        var path = "knowledge_images/${value.id}";
 
-        var imagePath = await ImageServices().uploadFile(image.data!, path);
-        knowledge.images.add(imagePath);
-        // update announcement in firebase.
+      if (imagesByte != null) {
+        var path = "knowledge_images/${value.id}";
+        var imagePath = '';
+        for (int i = 0; i < imagesByte.length; i++) {
+          imagePath =
+              await ImageServices().uploadFile(imagesByte[i], '$path/$i');
+          knowledge.images.add(imagePath);
+        }
         await FirebaseFirestore.instance
             .collection(collectionName)
             .doc(knowledge.knowledgeId)

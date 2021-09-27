@@ -30,7 +30,7 @@ class VerificationBloc extends BaseBloc<VerificationEvent, VerificationState> {
       yield VerficationInprogress();
       _knowledgeList = await KnowledgeServices().readKnowledgeList(
         status: KnowledgeStatus.pending,
-        subDistrictId: _adminInfo.memberAddress!.subDistrict!.id,
+        subDistrictName: _adminInfo.memberAddress!.subDistrict!.name,
       );
       print('knowledge list -> ${_knowledgeList.length}');
       yield VerificationPrepareSuccess();

@@ -9,12 +9,26 @@ class UserRegisterSuccess extends UserRegisterState {}
 
 class UserRegisterFailed extends UserRegisterState {}
 
-class UserRegisterStateGetProvinceSuccess extends UserRegisterState {}
+class UserRegisterStateGetProvinceSuccess extends UserRegisterState {
+  final List<BaseAddress> provinceList;
+  final BaseAddress currentProvince;
 
-class UserRegisterStatePrepareAddressSuccess extends UserRegisterState {
+  UserRegisterStateGetProvinceSuccess(this.provinceList, this.currentProvince);
+}
+
+class UserRegisterStateGetDistrictSuccess extends UserRegisterState {
+  final List<BaseAddress> districtList;
+  final BaseAddress currentDistrict;
+
+  UserRegisterStateGetDistrictSuccess(this.districtList, this.currentDistrict);
+}
+
+class UserRegisterStateGetSubDistrictSuccess extends UserRegisterState {
   final List<BaseAddress> subDistrictList;
   final BaseAddress currentSubDistrict;
 
-  UserRegisterStatePrepareAddressSuccess(
+  UserRegisterStateGetSubDistrictSuccess(
       this.subDistrictList, this.currentSubDistrict);
 }
+
+class UserRegisterStatePrepareAddressSuccess extends UserRegisterState {}

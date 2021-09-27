@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:community_knowledgebase/bloc/base_bloc.dart';
 import 'package:community_knowledgebase/models/models.dart';
@@ -55,8 +56,9 @@ class KnowledgeFormBloc
         knowledgeInfo!.address = _member.memberAddress;
         if (knowledgeInfo!.category == null)
           knowledgeInfo!.category = categories[0];
+
         var result = await KnowledgeServices()
-            .addKnowledge(knowledgeInfo!, image: event.image);
+            .addKnowledge(knowledgeInfo!, imagesByte: event.images);
         await uiFeedback.hideLoading();
         if (result != null) yield KnowledgeAddSuccess();
       } else if (event is KnowledgeChangedCategory) {

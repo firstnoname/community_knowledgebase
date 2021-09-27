@@ -93,18 +93,28 @@ class KnowledgeDetailView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 24),
+                  Container(
+                    height: MediaQuery.of(context).size.width / 5,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: knowledgeDetail.images.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.network(
+                          knowledgeDetail.images[index],
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 24),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: knowledgeDetail.images
-                          .map((image) => Image.network(
-                                image,
-                                fit: BoxFit.contain,
-                                height: MediaQuery.of(context).size.width / 5,
-                                width: MediaQuery.of(context).size.width / 5,
-                              ))
-                          .toList(),
+                    padding: const EdgeInsets.symmetric(horizontal: 48),
+                    child: Text(
+                      'อำเภอ : ${knowledgeDetail.address?.subDistrict?.name ?? ''}',
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
                   SizedBox(height: 24),
