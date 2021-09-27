@@ -40,10 +40,11 @@ class _UserRegisterViewState extends State<UserRegisterView> {
           child: Center(
             child: Container(
               decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(16),
-                gradient: LinearGradient(
-                  colors: [Colors.yellow[100]!, Colors.green[100]!],
-                ),
+                // gradient: LinearGradient(
+                //   colors: [Colors.yellow[100]!, Colors.green[100]!],
+                // ),
               ),
               margin: EdgeInsets.all(32),
               padding: EdgeInsets.all(24),
@@ -58,8 +59,8 @@ class _UserRegisterViewState extends State<UserRegisterView> {
                         children: <Widget>[
                           buildTextFieldEmail(context),
                           buildTextFieldDisplayName(context),
-                          // buildSelectProvince(ctx),
-                          // buildSelectDistrict(ctx),
+                          buildSelectProvince(context),
+                          buildSelectDistrict(context),
                           buildSelectSubDistrict(context),
                           buildTextFieldPassword(context),
                           buildTextFieldPasswordConfirm(context),
@@ -146,18 +147,19 @@ class _UserRegisterViewState extends State<UserRegisterView> {
     return Container(
       child: BlocBuilder<UserRegisterBloc, UserRegisterState>(
         buildWhen: (previous, current) {
-          if (current is UserRegisterStatePrepareAddressSuccess)
+          if (current is UserRegisterStateGetSubDistrictSuccess)
             return true;
           else
             return false;
         },
         builder: (context, state) {
-          if (state is UserRegisterStatePrepareAddressSuccess) {
+          if (state is UserRegisterStateGetSubDistrictSuccess) {
             subDistrictItems = state.subDistrictList;
             currentSubDistrict = state.currentSubDistrict;
             return subDistrictItems.length == 0
                 ? Container()
                 : Container(
+                    width: double.infinity,
                     padding: EdgeInsets.all(12),
                     margin: EdgeInsets.only(top: 12),
                     decoration: BoxDecoration(
@@ -188,14 +190,102 @@ class _UserRegisterViewState extends State<UserRegisterView> {
     );
   }
 
-  Container buildSelectProvince(BuildContext context) {
+  Container buildSelectDistrict(BuildContext context) {
+    List<BaseAddress> districtItems;
+    BaseAddress currentDistrict;
+
     return Container(
-      padding: EdgeInsets.all(12),
-      margin: EdgeInsets.only(top: 12),
-      decoration: BoxDecoration(
-          color: Colors.yellow[50], borderRadius: BorderRadius.circular(16)),
-      child: DropdownButton(
-        items: [],
+      child: BlocBuilder<UserRegisterBloc, UserRegisterState>(
+        buildWhen: (previous, current) {
+          if (current is UserRegisterStateGetDistrictSuccess)
+            return true;
+          else
+            return false;
+        },
+        builder: (context, state) {
+          if (state is UserRegisterStateGetDistrictSuccess) {
+            districtItems = state.districtList;
+            currentDistrict = state.currentDistrict;
+            return districtItems.length == 0
+                ? Container()
+                : Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12),
+                    margin: EdgeInsets.only(top: 12),
+                    decoration: BoxDecoration(
+                        color: Colors.yellow[50],
+                        borderRadius: BorderRadius.circular(16)),
+                    child: DropdownButton<BaseAddress>(
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      value: currentDistrict,
+                      items: districtItems
+                          .map(
+                            (e) => DropdownMenuItem<BaseAddress>(
+                              value: e,
+                              child: Text('${e.name}'),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        context.read<UserRegisterBloc>().add(
+                              UserRegisterEventPressDistrict(value!),
+                            );
+                      },
+                    ),
+                  );
+          } else
+            return Container();
+        },
+      ),
+    );
+  }
+
+  Container buildSelectProvince(BuildContext context) {
+    List<BaseAddress> provinceItems;
+    BaseAddress currentProvince;
+
+    return Container(
+      child: BlocBuilder<UserRegisterBloc, UserRegisterState>(
+        buildWhen: (previous, current) {
+          if (current is UserRegisterStateGetProvinceSuccess)
+            return true;
+          else
+            return false;
+        },
+        builder: (context, state) {
+          if (state is UserRegisterStateGetProvinceSuccess) {
+            provinceItems = state.provinceList;
+            currentProvince = state.currentProvince;
+            return provinceItems.length == 0
+                ? Container()
+                : Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12),
+                    margin: EdgeInsets.only(top: 12),
+                    decoration: BoxDecoration(
+                        color: Colors.yellow[50],
+                        borderRadius: BorderRadius.circular(16)),
+                    child: DropdownButton<BaseAddress>(
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      value: currentProvince,
+                      items: provinceItems
+                          .map(
+                            (e) => DropdownMenuItem<BaseAddress>(
+                              value: e,
+                              child: Text('${e.name}'),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        context.read<UserRegisterBloc>().add(
+                              UserRegisterEventPressProvince(value!),
+                            );
+                      },
+                    ),
+                  );
+          } else
+            return Container();
+        },
       ),
     );
   }

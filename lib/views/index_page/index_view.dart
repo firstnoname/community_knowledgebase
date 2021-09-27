@@ -98,12 +98,6 @@ class IndexView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: GridView.count(
                         crossAxisCount: 3,
-                        // crossAxisCount: MediaQuery.of(context).size.width <=
-                        //         400.0
-                        //     ? 3
-                        //     : MediaQuery.of(context).size.width >= 1000.0
-                        //         ? 5
-                        //         : 4,
                         childAspectRatio: 3,
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

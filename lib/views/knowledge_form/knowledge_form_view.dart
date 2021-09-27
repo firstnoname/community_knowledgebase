@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:mime_type/mime_type.dart';
-import 'package:path_provider/path_provider.dart';
 
 // ignore: must_be_immutable
 class KnowledgeFormView extends StatefulWidget {
@@ -24,8 +23,9 @@ class KnowledgeFormView extends StatefulWidget {
 }
 
 class _KnowledgeFormViewState extends State<KnowledgeFormView> {
-  Image? _imageWidget;
-  MediaInfo? mediaData;
+  MediaInfo? videoData;
+
+  List<Uint8List> _imagesWidget = [];
 
   int? _indexCategory = 0;
 
@@ -160,33 +160,49 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                               color: Colors.blueGrey[200],
                               width: 1,
                             ),
-                            Container(
-                              width: 200,
-                              height: 400,
-                              child: GridView.count(
-                                crossAxisCount: 1,
-                                children: [
-                                  Container(
-                                    color: Colors.grey[200],
-                                    child: Stack(
-                                      children: [
-                                        _imageWidget != null
-                                            ? Center(child: _imageWidget!)
-                                            : Container(),
-                                        Center(
-                                          child: IconButton(
-                                            onPressed: () async {
-                                              _imageWidget = await getImage();
-                                              setState(() {});
-                                            },
-                                            icon: Icon(Icons.image),
+                            GestureDetector(
+                              onTap: () async {
+                                await getMultiImagesBytes();
+                                setState(() {});
+                              },
+                              child: _imagesWidget.length > 0
+                                  ? Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 4,
+                                      height: 400,
+                                      margin: const EdgeInsets.all(15.0),
+                                      padding: const EdgeInsets.all(3.0),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      child: GridView.count(
+                                        crossAxisCount: 2,
+                                        children: List.generate(
+                                          _imagesWidget.length,
+                                          (index) => Container(
+                                            child: _imagesWidget.length > 0
+                                                ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Image.memory(
+                                                      _imagesWidget[index],
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    child: Icon(
+                                                        Icons.photo_album)),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                      ),
+                                    )
+                                  : Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 4,
+                                      height: 400,
+                                      child: Icon(Icons.photo_album)),
                             ),
                           ],
                         ),
@@ -197,7 +213,7 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                 'knowledge data title -> ${knowledgeData.knowledgeTitle}');
                             context.read<KnowledgeFormBloc>().add(
                                 KnowledgeFormSubmitted(knowledgeData,
-                                    image: mediaData));
+                                    images: _imagesWidget));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -216,59 +232,17 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
     );
   }
 
-  Future<List<Image?>> getMultiImages() async {
-    List? fromPicker =
-        await ImagePickerWeb.getMultiImages(outputType: ImageType.bytes);
+  Future getVideo() async {
+    videoData = await ImagePickerWeb.getVideoInfo;
 
-    if (fromPicker != null) {
-      Uint8List tempImage = fromPicker.first as Uint8List;
-      Directory tempDir = await getTemporaryDirectory();
-      // final file = await File(tempImage).create();
-    }
-
-    return fromPicker as List<Image>;
+    return;
   }
 
-  Future<Image?> getImage() async {
-    mediaData = await ImagePickerWeb.getImageInfo;
+  Future<List<Uint8List>> getMultiImagesBytes() async {
+    List<Uint8List> fromPicker =
+        (await ImagePickerWeb.getMultiImages(outputType: ImageType.bytes) ?? [])
+            as List<Uint8List>;
 
-    String mimeType = mime(Path.basename(mediaData!.fileName!))!;
-
-    html.File mediaFile =
-        html.File(mediaData!.data!, mediaData!.fileName!, {'type': mimeType});
-
-    return _imageWidget = Image.memory(mediaData!.data!);
-  }
-
-  Future<Image> getSingleImage() async {
-    Image _selectedImage =
-        await ImagePickerWeb.getImage(outputType: ImageType.widget) as Image;
-
-    return _selectedImage;
-  }
-
-  Future<List<Image>> getImageDevice() async {
-    MediaInfo mediaData = await ImagePickerWeb.getImageInfo;
-    List<Image> _selectedImage = [];
-
-    if (mediaData.data != null) {
-      String mimeType = mime(Path.basename(mediaData.fileName!))!;
-      var mediaFile =
-          html.File(mediaData.data!, mediaData.fileName!, {'type': mimeType});
-      _selectedImage.add(Image.memory(mediaData.data!));
-    }
-
-    return _selectedImage;
-  }
-
-  Future<List<html.File>> getImagesDevice() async {
-    List<html.File> _selectedImage = [];
-    _selectedImage =
-        (await ImagePickerWeb.getMultiImages(outputType: ImageType.bytes))!
-            as List<html.File>;
-
-    String mimeType = mime(Path.basename(_selectedImage[0].name))!;
-
-    return _selectedImage;
+    return _imagesWidget = fromPicker.map((e) => e).toList();
   }
 }

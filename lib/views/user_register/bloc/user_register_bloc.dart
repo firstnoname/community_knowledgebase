@@ -22,16 +22,13 @@ class UserRegisterBloc extends BaseBloc<UserRegisterEvent, UserRegisterState> {
   String? password;
 
   List<BaseAddress> _provinces = [];
-  get provices => _provinces;
+  late BaseAddress _currentProvince;
 
   List<BaseAddress> _district = [];
-  get districts => _district;
+  late BaseAddress _currentDistrict;
 
   List<BaseAddress> _subDistrict = [];
-  // get subDistricts => _subDistrict;
-
   late BaseAddress _currentSubDistrict;
-  // get currentSubDistrict => _currentSubDistrict;
 
   String _reasonError = '';
 
@@ -40,11 +37,7 @@ class UserRegisterBloc extends BaseBloc<UserRegisterEvent, UserRegisterState> {
     UserRegisterEvent event,
   ) async* {
     if (event is UserRegisterEventInitial) {
-      // TODO *** ต้องทำ feature เลือกจังหวัดให้ได้
-      // ติดปัญหาตอน decode json ไม่ได้.
-      // _provinces = await AddressServices().getProvices();
-      // print('provinces -> ${_provinces.length}');
-      this.add(UserRegisterEventPrepareAddress());
+      this.add(UserRegisterEventPrepareProvince());
       yield UserRegisterStateInitial();
     } else if (event is UserSubmittedForm) {
       await uiFeedback.showLoading();
@@ -84,22 +77,43 @@ class UserRegisterBloc extends BaseBloc<UserRegisterEvent, UserRegisterState> {
       } catch (e) {
         print("Signup failed -> ${e.toString()}");
       }
+    } else if (event is UserRegisterEventPrepareProvince) {
+      // Get province.
+      // _provinces = await AddressServices().getProvices();
+      _provinces = await AddressServices().getProvinceAPI();
+      _currentProvince = _provinces.first;
+
+      yield UserRegisterStateGetProvinceSuccess(_provinces, _provinces.first);
     } else if (event is UserRegisterEventPressProvince) {
-      yield UserRegisterStateGetProvinceSuccess();
+      _currentProvince = event.selectedProvince;
+      // Add event to call get district.
+      this.add(UserRegisterEventPrepareDistrict());
+      yield UserRegisterStateGetProvinceSuccess(_provinces, _currentProvince);
+    } else if (event is UserRegisterEventPrepareDistrict) {
+      // Get district.
+      // _district = await AddressServices()
+      //     .getDistricts(provinceId: _currentProvince.provinceId!);
+      _district =
+          await AddressServices().getDistrictAPI(_currentProvince.name!);
+      _currentDistrict = _district.first;
+      yield UserRegisterStateGetDistrictSuccess(_district, _district.first);
     } else if (event is UserRegisterEventPressDistrict) {
+      _currentDistrict = event.selectedDistrict;
+      this.add(UserRegisterEventPrepareSubDistrict());
+      yield UserRegisterStateGetDistrictSuccess(_district, _district.first);
+    } else if (event is UserRegisterEventPrepareSubDistrict) {
+      // Get sub district.
+      // _subDistrict =
+      //     await AddressServices().getSubDistrict(_currentDistrict.id);
+      _subDistrict = await AddressServices()
+          .getSubDistrictAPI(_currentProvince.name!, _currentDistrict.name!);
+      _currentSubDistrict = _subDistrict.first;
+      yield UserRegisterStateGetSubDistrictSuccess(
+          _subDistrict, _subDistrict.first);
     } else if (event is UserRegisterEventPressSubDistrict) {
       _currentSubDistrict = event.selectedSubDistrict;
-      yield UserRegisterStatePrepareAddressSuccess(
+      yield UserRegisterStateGetSubDistrictSuccess(
           _subDistrict, _currentSubDistrict);
-    } else if (event is UserRegisterEventPrepareAddress) {
-      _subDistrict = await AddressServices().getSubDistricts();
-      _currentSubDistrict = _subDistrict.first;
-
-      if (_subDistrict.length == 0)
-        yield UserRegisterFailed();
-      else
-        yield UserRegisterStatePrepareAddressSuccess(
-            _subDistrict, _currentSubDistrict);
-    }
+    } else if (event is UserRegisterEventPrepareAddress) {}
   }
 }
