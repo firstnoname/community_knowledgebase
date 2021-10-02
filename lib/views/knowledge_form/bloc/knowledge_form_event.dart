@@ -7,7 +7,6 @@ class KnowledgeFormInitial extends KnowledgeFormEvent {}
 
 class KnowledgeFormSubmitted extends KnowledgeFormEvent {
   final Knowledge knowledge;
-
   final List<Uint8List>? images;
 
   KnowledgeFormSubmitted(this.knowledge, {this.images});

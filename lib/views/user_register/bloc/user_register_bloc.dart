@@ -100,7 +100,7 @@ class UserRegisterBloc extends BaseBloc<UserRegisterEvent, UserRegisterState> {
     } else if (event is UserRegisterEventPressDistrict) {
       _currentDistrict = event.selectedDistrict;
       this.add(UserRegisterEventPrepareSubDistrict());
-      yield UserRegisterStateGetDistrictSuccess(_district, _district.first);
+      yield UserRegisterStateGetDistrictSuccess(_district, _currentDistrict);
     } else if (event is UserRegisterEventPrepareSubDistrict) {
       // Get sub district.
       // _subDistrict =

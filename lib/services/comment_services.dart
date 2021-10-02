@@ -14,10 +14,13 @@ class CommentServices {
         .collection(collectionComment)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
-        _comments
-            .add(Comment.fromJson(element.data()..addAll({'id': element.id})));
-      });
+      _comments = value.docs
+          .map((e) => Comment.fromJson(e.data()..addAll({'id': e.id})))
+          .toList();
+      // value.docs.forEach((element) {
+      //   _comments
+      //       .add(Comment.fromJson(element.data()..addAll({'id': element.id})));
+      // });
     });
 
     return _comments;
@@ -36,5 +39,22 @@ class CommentServices {
     });
     // print('result -> ${result.snapshots()}');
     return comment;
+  }
+
+  Future<bool> deleteComment(
+      {required String topicId, required String commentId}) async {
+    bool isSucess = true;
+    await FirebaseFirestore.instance
+        .collection(TopicServices.collectionTopic)
+        .doc(topicId)
+        .collection(collectionComment)
+        .doc(commentId)
+        .delete()
+        .catchError((error) {
+      isSucess = false;
+      print('delete comment failure -> ${error.toString()}');
+    });
+
+    return isSucess;
   }
 }

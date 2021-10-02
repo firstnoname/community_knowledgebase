@@ -42,6 +42,17 @@ class IndexView extends StatelessWidget {
                 ],
               ),
               actions: [
+                member.memberStatus == 'supadmin'
+                    ? ElevatedButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserManagerView(),
+                          ),
+                        ),
+                        child: Text('จัดการสถานะ user'),
+                      )
+                    : Container(),
                 member.memberStatus == 'admin'
                     ? ElevatedButton(
                         onPressed: () => Navigator.push(

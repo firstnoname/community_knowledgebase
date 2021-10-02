@@ -13,4 +13,8 @@ class TopicDetailFailed extends TopicDetailState {
   TopicDetailFailed(this.reason);
 }
 
+class TopicDetailDeleteTopicSuccess extends TopicDetailState {}
+
+class TopicDetailDeleteCommentSuccess extends TopicDetailState {}
+
 class TopicAddCommentSuccess extends TopicDetailState {}

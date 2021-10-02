@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TopicFormView extends StatelessWidget {
-  const TopicFormView({Key? key}) : super(key: key);
+  final Function callBackInitState;
+  TopicFormView({Key? key, required this.callBackInitState}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,10 @@ class TopicFormView extends StatelessWidget {
       create: (context) => TopicFormBloc(context),
       child: BlocBuilder<TopicFormBloc, TopicFormState>(
         builder: (context, state) {
+          if (state is TopicFormSubmitSuccess) {
+            callBackInitState();
+            Navigator.pop(context);
+          }
           Topic topicData = context.read<TopicFormBloc>().topic!;
           return Scaffold(
             appBar: AppBar(),

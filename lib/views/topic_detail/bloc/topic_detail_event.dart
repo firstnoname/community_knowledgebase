@@ -10,3 +10,17 @@ class TopicAddedComment extends TopicDetailEvent {
 
   TopicAddedComment(this.comment);
 }
+
+class TopicDetailEventButtonDeleteTopicPressed extends TopicDetailEvent {
+  final String topicId;
+
+  TopicDetailEventButtonDeleteTopicPressed(this.topicId);
+}
+
+class TopicDetailEventButtonDeleteCommentPressed extends TopicDetailEvent {
+  final String topicId;
+  final String commentId;
+
+  TopicDetailEventButtonDeleteCommentPressed(
+      {required this.commentId, required this.topicId});
+}
