@@ -10,7 +10,6 @@ const primaryButtonColor = Color.fromRGBO(242, 92, 1, 1);
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
-    accentColor: primaryColor,
     primaryColor: primaryColor,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(

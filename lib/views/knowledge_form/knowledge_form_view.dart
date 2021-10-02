@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:html' as html;
 import 'dart:typed_data';
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/utilities/ui_feedback.dart';
 import 'package:path/path.dart' as Path;
 
 import 'package:community_knowledgebase/models/knowledge.dart';
@@ -23,7 +24,7 @@ class KnowledgeFormView extends StatefulWidget {
 }
 
 class _KnowledgeFormViewState extends State<KnowledgeFormView> {
-  MediaInfo? videoData;
+  html.File? _videoFile;
 
   List<Uint8List> _imagesWidget = [];
 
@@ -61,7 +62,7 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                         Row(
                           children: [
                             Expanded(
-                              flex: 1,
+                              flex: 3,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
@@ -156,53 +157,104 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                 ],
                               ),
                             ),
-                            Container(
-                              color: Colors.blueGrey[200],
-                              width: 1,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                await getMultiImagesBytes();
-                                setState(() {});
-                              },
-                              child: _imagesWidget.length > 0
-                                  ? Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 4,
-                                      height: 400,
-                                      margin: const EdgeInsets.all(15.0),
-                                      padding: const EdgeInsets.all(3.0),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      child: GridView.count(
-                                        crossAxisCount: 2,
-                                        children: List.generate(
-                                          _imagesWidget.length,
-                                          (index) => Container(
-                                            child: _imagesWidget.length > 0
-                                                ? Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Image.memory(
-                                                      _imagesWidget[index],
-                                                    ),
-                                                  )
-                                                : Container(
-                                                    child: Icon(
-                                                        Icons.photo_album)),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                            'เลือกวีดีโอ : ${_videoFile?.name ?? ''}'),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              await getVideo();
+                                              setState(() {});
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              child: Icon(Icons.video_library),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  : Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 4,
-                                      height: 400,
-                                      child: Icon(Icons.photo_album)),
+                                      ],
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await getMultiImagesBytes();
+                                      setState(() {});
+                                    },
+                                    child: _imagesWidget.length > 0
+                                        ? Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                4,
+                                            height: 400,
+                                            margin: const EdgeInsets.all(15.0),
+                                            padding: const EdgeInsets.all(3.0),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            child: GridView.count(
+                                              crossAxisCount: 2,
+                                              children: List.generate(
+                                                _imagesWidget.length,
+                                                (index) => Container(
+                                                  child: _imagesWidget.length >
+                                                          0
+                                                      ? Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Image.memory(
+                                                            _imagesWidget[
+                                                                index],
+                                                          ),
+                                                        )
+                                                      : Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                          child: Icon(Icons
+                                                              .photo_album)),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                4,
+                                            height: 400,
+                                            child: Icon(Icons.photo_album)),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -233,15 +285,36 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
   }
 
   Future getVideo() async {
-    videoData = await ImagePickerWeb.getVideoInfo;
+    _videoFile = await ImagePickerWeb.getVideo(outputType: VideoType.file);
 
-    return;
+    debugPrint('--Picked Video File--');
+    debugPrint(
+        '${_videoFile?.name} - ${_videoFile?.size} ${_videoFile!.relativePath}');
+
+    if (_videoFile != null) {
+      if (_videoFile!.size > 50000000) {
+        UIFeedback(context).showErrorDialog(context,
+            title: 'เกิดข้อผิดพลาด',
+            content: 'ขนาดวีดีใหญ่เกินไป, เลือกวีดีโอขนาดไม่เกิน 50 MB');
+        _videoFile = null;
+      }
+    }
+    setState(() {});
   }
 
   Future<List<Uint8List>> getMultiImagesBytes() async {
     List<Uint8List> fromPicker =
         (await ImagePickerWeb.getMultiImages(outputType: ImageType.bytes) ?? [])
             as List<Uint8List>;
+
+    if (fromPicker.isNotEmpty) {
+      if (fromPicker.length > 10) {
+        fromPicker = [];
+        UIFeedback(context).showErrorDialog(context,
+            title: 'เกิดข้อผิดพลาด',
+            content: 'ท่านเลือกรูปจำนวนมากเกินไป, เลือกรูปภาพไม่เกิน 10 รูป');
+      }
+    }
 
     return _imagesWidget = fromPicker.map((e) => e).toList();
   }

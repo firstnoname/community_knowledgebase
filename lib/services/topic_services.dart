@@ -31,4 +31,20 @@ class TopicServices {
       return null;
     });
   }
+
+  Future<bool> deleteTopic(String topicId) async {
+    bool isSuccess = true;
+
+    try {
+      await FirebaseFirestore.instance
+          .collection(collectionTopic)
+          .doc(topicId)
+          .delete();
+    } on Exception catch (e) {
+      isSuccess = false;
+      print('delete topic failure -> ${e.toString()}');
+    }
+
+    return isSuccess;
+  }
 }

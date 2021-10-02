@@ -1,5 +1,6 @@
 export 'index_page/index_view.dart';
 export 'announcement/announcement_form.dart';
+export 'user_manager/user_manager_view.dart';
 export 'knowledge_list/knowledge_list_view.dart';
 export 'knowledge_form/knowledge_form_view.dart';
 export 'knowledge_detail/knowledge_detail_view.dart';

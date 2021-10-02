@@ -46,15 +46,15 @@ class _UserRegisterViewState extends State<UserRegisterView> {
                 //   colors: [Colors.yellow[100]!, Colors.green[100]!],
                 // ),
               ),
-              margin: EdgeInsets.all(32),
-              padding: EdgeInsets.all(24),
+              margin: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               child: BlocBuilder<UserRegisterBloc, UserRegisterState>(
                 builder: (context, state) {
                   return Form(
                     key: _formGK,
                     child: SingleChildScrollView(
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           buildTextFieldEmail(context),

@@ -24,7 +24,11 @@ class TopicListView extends StatelessWidget {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TopicFormView(),
+                      builder: (_) => TopicFormView(
+                        callBackInitState: () {
+                          context.read<TopicListBloc>().add(TopicListInitial());
+                        },
+                      ),
                     ),
                   ),
                   child: Padding(
@@ -77,7 +81,14 @@ class TopicListView extends StatelessWidget {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TopicDetailView(topics[index]),
+                        builder: (_) => TopicDetailView(
+                          topics[index],
+                          callBackInit: () {
+                            context
+                                .read<TopicListBloc>()
+                                .add(TopicListInitial());
+                          },
+                        ),
                       ),
                     ),
                   );

@@ -17,6 +17,21 @@ class UserServices {
           );
   }
 
+  Future<List<Member>> getUserList(String filterByName) async {
+    List<Member> userList = [];
+
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .get()
+        .then((value) {
+      userList = value.docs
+          .map((user) => Member.fromJson(user.data()..addAll({'id': user.id})))
+          .toList();
+    });
+
+    return userList;
+  }
+
   Future<Member> addUser(
       User userInfo, String displayName, Address address) async {
     Member member = Member(
