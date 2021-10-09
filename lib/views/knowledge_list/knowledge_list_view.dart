@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/knowledge.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:community_knowledgebase/views/knowledge_form/knowledge_form_view.dart';
 import 'package:community_knowledgebase/views/knowledge_list/bloc/knowledge_list_bloc.dart';
 import 'package:community_knowledgebase/views/views.dart';
@@ -31,25 +32,56 @@ class _KnowledgeListViewState extends State<KnowledgeListView> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text('องค์ความรู้'),
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [firstColor, secondColor],
+                    stops: [0.5, 1.0],
+                  ),
+                ),
+              ),
+              title: Text('องค์ความรู้ '),
+              centerTitle: true,
               actions: [
-                ElevatedButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => KnowledgeFormView(title: ''),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        Icon(Icons.add),
-                        Text('สร้างองค์ความรู้'),
-                      ],
-                    ),
-                  ),
-                )
+                TextButton(
+                    onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => KnowledgeFormView(title: ''),
+                          ),
+                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            'สร้างองค์ความรู้ ',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ))
+                // ElevatedButton(
+                //   onPressed: () => Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => KnowledgeFormView(title: ''),
+                //     ),
+                //   ),
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 16),
+                //     child: Row(
+                //       children: [
+                //         Icon(Icons.add),
+                //         Text('สร้างองค์ความรู้'),
+                //       ],
+                //     ),
+                //   ),
+                // )
               ],
             ),
             body: Padding(

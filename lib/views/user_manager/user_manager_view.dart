@@ -1,3 +1,4 @@
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:community_knowledgebase/views/user_manager/bloc/user_manager_bloc.dart';
 import 'package:community_knowledgebase/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,14 @@ class UserManagerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [firstColor, secondColor],
+              stops: [0.5, 1.0],
+            ),
+          ),
+        ),
         title: Text('จัดการสถานะผู้ใช้งาน'),
         centerTitle: true,
       ),

@@ -1,15 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/feature_sort_by_views" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="dd2f90e9-75b5-4c5a-ba9b-066a70fae84f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/widgets/gradient_appbar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/community_knowledgebase_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/community_knowledgebase_app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utilities/app_themes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utilities/app_themes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/announcement/announcement_form.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/announcement/announcement_form.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/index_page/index_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/index_page/index_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/knowledge_detail/knowledge_detail_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/knowledge_detail/knowledge_detail_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/knowledge_form/knowledge_form_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/knowledge_form/knowledge_form_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/knowledge_list/knowledge_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/knowledge_list/knowledge_list_view.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1yzoCDEhuvKohguRVxjdjYSCwh6" />
@@ -46,22 +91,50 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/feature_sort_by_views" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1863" height="265" key="GridCell.Tab.0.bottom" timestamp="1633264505220">
+    <state width="1863" height="265" key="GridCell.Tab.0.bottom" timestamp="1633774953959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1863" height="265" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633264505220" />
-    <state width="1863" height="265" key="GridCell.Tab.0.center" timestamp="1633264505219">
+    <state width="1863" height="265" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1633774953959" />
+    <state width="1863" height="265" key="GridCell.Tab.0.center" timestamp="1633774953958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1863" height="265" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633264505219" />
-    <state width="1863" height="265" key="GridCell.Tab.0.left" timestamp="1633264505219">
+    <state width="1863" height="265" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1633774953958" />
+    <state width="1863" height="265" key="GridCell.Tab.0.left" timestamp="1633774953958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1863" height="265" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633264505219" />
-    <state width="1863" height="265" key="GridCell.Tab.0.right" timestamp="1633264505219">
+    <state width="1863" height="265" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1633774953958" />
+    <state width="1863" height="265" key="GridCell.Tab.0.right" timestamp="1633774953959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1863" height="265" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633264505219" />
+    <state width="1863" height="265" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1633774953959" />
+    <state x="116" y="100" width="1720" height="840" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1633775511075">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="116" y="100" width="1720" height="840" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633775511075" />
   </component>
 </project>

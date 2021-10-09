@@ -7,8 +7,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'views/views.dart';
 
-class CommunityKnowledgebase extends StatelessWidget {
-  CommunityKnowledgebase({Key? key}) : super(key: key);
+class CommunityKnowledgeBase extends StatelessWidget {
+  CommunityKnowledgeBase({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

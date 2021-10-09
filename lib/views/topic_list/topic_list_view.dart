@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:community_knowledgebase/views/topic_list/bloc/topic_list_bloc.dart';
 import 'package:community_knowledgebase/views/views.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,18 @@ class TopicListView extends StatelessWidget {
           List<Topic> topics = context.read<TopicListBloc>().topics;
           return Scaffold(
             appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [firstColor, secondColor],
+                    stops: [0.5, 1.0],
+                  ),
+                ),
+              ),
               title: Text('กระทู้ทั้งหมด'),
+              centerTitle: true,
               actions: [
-                ElevatedButton(
+                TextButton(
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -35,8 +45,14 @@ class TopicListView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       children: [
-                        Icon(Icons.add),
-                        Text('สร้างกระทู้'),
+                        Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'สร้างกระทู้',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ],
                     ),
                   ),

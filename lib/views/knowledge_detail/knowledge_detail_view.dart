@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,14 @@ class KnowledgeDetailView extends StatelessWidget {
       create: (context) => KnowledgeDetailBloc(context, knowledgeDetail),
       child: Scaffold(
         appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [firstColor, secondColor],
+                stops: [0.5, 1.0],
+              ),
+            ),
+          ),
           actions: [
             BlocBuilder<KnowledgeDetailBloc, KnowledgeDetailState>(
               buildWhen: (previous, current) {

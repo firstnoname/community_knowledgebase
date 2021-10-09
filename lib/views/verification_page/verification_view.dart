@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:community_knowledgebase/utilities/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,15 @@ class _VerificationViewState extends State<VerificationView> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text('จัดการองค์ความรู้'),
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [firstColor, secondColor],
+                    stops: [0.5, 1.0],
+                  ),
+                ),
+              ),
+              title: Text('จัดการองค์ความรู้ '),
               centerTitle: true,
               actions: [
                 IconButton(

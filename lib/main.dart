@@ -11,5 +11,5 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   Bloc.observer = ABlocObserver();
-  runApp(CommunityKnowledgebase());
+  runApp(CommunityKnowledgeBase());
 }

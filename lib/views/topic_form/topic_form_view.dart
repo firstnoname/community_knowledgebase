@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/topic.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:community_knowledgebase/views/topic_form/bloc/topic_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,16 @@ class TopicFormView extends StatelessWidget {
           }
           Topic topicData = context.read<TopicFormBloc>().topic!;
           return Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [firstColor, secondColor],
+                    stops: [0.5, 1.0],
+                  ),
+                ),
+              ),
+            ),
             body: Center(
               child: Container(
                 // width: MediaQuery.of(context).size.width,
