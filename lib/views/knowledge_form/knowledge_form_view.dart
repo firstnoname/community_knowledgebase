@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:html' as html;
 import 'dart:typed_data';
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:community_knowledgebase/utilities/ui_feedback.dart';
 import 'package:path/path.dart' as Path;
 
@@ -49,6 +50,14 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
               context.read<KnowledgeFormBloc>().categories;
           return Scaffold(
             appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [firstColor, secondColor],
+                    stops: [0.5, 1.0],
+                  ),
+                ),
+              ),
               title: Text(widget.title),
             ),
             body: Center(

@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:community_knowledgebase/views/topic_list/bloc/topic_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,14 @@ class _TopicDetailViewState extends State<TopicDetailView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [firstColor, secondColor],
+              stops: [0.5, 1.0],
+            ),
+          ),
+        ),
         actions: [],
       ),
       body: BlocProvider<TopicDetailBloc>(

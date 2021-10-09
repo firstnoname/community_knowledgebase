@@ -1,3 +1,5 @@
+import 'package:community_knowledgebase/utilities/constants.dart';
+
 import '../../models/models.dart';
 import '../../views/index_page/bloc/index_bloc.dart';
 import '../../views/topic_list/topic_list_view.dart';
@@ -26,6 +28,14 @@ class IndexView extends StatelessWidget {
               context.read<IndexBloc>().announcementList;
           return Scaffold(
             appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [firstColor, secondColor],
+                    stops: [0.5, 1.0],
+                  ),
+                ),
+              ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -38,50 +48,60 @@ class IndexView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8),
-                  Text('คลังความรู้ชุมชน'),
+                  Text(
+                    'คลังความรู้ชุมชน',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
               actions: [
                 member.memberStatus == 'supadmin'
-                    ? ElevatedButton(
+                    ? TextButton(
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => UserManagerView(),
                           ),
                         ),
-                        child: Text('จัดการสถานะ user'),
+                        child: Text('จัดการสถานะ user',
+                            style: TextStyle(color: Colors.white)),
                       )
                     : Container(),
                 member.memberStatus == 'admin'
-                    ? ElevatedButton(
+                    ? TextButton(
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => AnnouncementForm(),
                           ),
                         ),
-                        child: Text('เพิ่มประกาศ'),
+                        child: Text('เพิ่มประกาศ',
+                            style: TextStyle(color: Colors.white)),
                       )
                     : Container(),
                 member.memberStatus == 'admin'
-                    ? ElevatedButton(
+                    ? TextButton(
                         onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => VerificationView(),
                             )),
-                        child: Text('จัดการองค์ความรู้'))
+                        child: Text('จัดการองค์ความรู้ ',
+                            style: TextStyle(color: Colors.white)))
                     : Container(),
-                ElevatedButton(
+                TextButton(
                   onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => TopicListView(),
                       )),
-                  child: Text('ประเด็นสนทนา'),
+                  child: Text('ประเด็นสนทนา',
+                      style: TextStyle(color: Colors.white)),
                 ),
-                ElevatedButton(onPressed: () {}, child: Text('ติดต่อเรา')),
+                TextButton(
+                    onPressed: () {},
+                    child: Text('ติดต่อเรา',
+                        style: TextStyle(color: Colors.white))),
                 IconButton(
                   onPressed: () =>
                       context.read<IndexBloc>().add(LogoutPressed()),

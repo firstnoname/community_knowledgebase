@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/address/base_address.dart';
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,6 +31,14 @@ class _UserRegisterViewState extends State<UserRegisterView> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [firstColor, secondColor],
+              stops: [0.5, 1.0],
+            ),
+          ),
+        ),
         title: Text("Sign up", style: TextStyle(color: Colors.white)),
       ),
       body: BlocProvider<UserRegisterBloc>(

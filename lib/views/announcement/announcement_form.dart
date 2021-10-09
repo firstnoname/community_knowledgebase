@@ -1,3 +1,4 @@
+import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:html' as html;
 import 'dart:io';
@@ -45,6 +46,14 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
               context.read<AnnouncementFormBloc>().announchment;
           return Scaffold(
             appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [firstColor, secondColor],
+                    stops: [0.5, 1.0],
+                  ),
+                ),
+              ),
               title: Text('สร้างประกาศ'),
             ),
             body: Center(
