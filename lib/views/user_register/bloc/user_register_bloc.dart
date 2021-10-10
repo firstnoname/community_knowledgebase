@@ -91,8 +91,6 @@ class UserRegisterBloc extends BaseBloc<UserRegisterEvent, UserRegisterState> {
       yield UserRegisterStateGetProvinceSuccess(_provinces, _currentProvince);
     } else if (event is UserRegisterEventPrepareDistrict) {
       // Get district.
-      // _district = await AddressServices()
-      //     .getDistricts(provinceId: _currentProvince.provinceId!);
       _district =
           await AddressServices().getDistrictAPI(_currentProvince.name!);
       _currentDistrict = _district.first;
