@@ -28,6 +28,7 @@ class IndexView extends StatelessWidget {
               context.read<IndexBloc>().announcementList;
           return Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
