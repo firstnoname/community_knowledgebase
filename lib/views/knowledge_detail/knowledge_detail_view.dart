@@ -3,10 +3,11 @@ import 'package:community_knowledgebase/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:video_player/video_player.dart';
 
 import 'bloc/knowledge_detail_bloc.dart';
 
-class KnowledgeDetailView extends StatelessWidget {
+class KnowledgeDetailView extends StatefulWidget {
   final Knowledge knowledgeDetail;
   final Function callBackInitialFunction;
   const KnowledgeDetailView(this.knowledgeDetail, this.callBackInitialFunction,
@@ -14,9 +15,26 @@ class KnowledgeDetailView extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<KnowledgeDetailView> createState() => _KnowledgeDetailViewState();
+}
+
+class _KnowledgeDetailViewState extends State<KnowledgeDetailView> {
+  late VideoPlayerController _videoController;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.knowledgeDetail.videoPath != null) {
+      _videoController =
+          VideoPlayerController.network(widget.knowledgeDetail.videoPath!)
+            ..initialize().then((_) => setState(() {}));
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider<KnowledgeDetailBloc>(
-      create: (context) => KnowledgeDetailBloc(context, knowledgeDetail),
+      create: (context) => KnowledgeDetailBloc(context, widget.knowledgeDetail),
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
@@ -32,7 +50,7 @@ class KnowledgeDetailView extends StatelessWidget {
               buildWhen: (previous, current) {
                 if (current is KnowledgeAcceptSuccess ||
                     current is KnowledgeEjectSuccess) {
-                  callBackInitialFunction();
+                  widget.callBackInitialFunction();
                   Navigator.pop(context);
                   return false;
                 }
@@ -86,7 +104,7 @@ class KnowledgeDetailView extends StatelessWidget {
                 children: [
                   SizedBox(height: 16),
                   Text(
-                    knowledgeDetail.knowledgeTitle!,
+                    widget.knowledgeDetail.knowledgeTitle!,
                     style: TextStyle(fontSize: 36),
                   ),
                   SizedBox(height: 16),
@@ -95,9 +113,10 @@ class KnowledgeDetailView extends StatelessWidget {
                       leading: CircleAvatar(
                         child: Icon(Icons.people),
                       ),
-                      title: Text(knowledgeDetail.member!.memberDisplayname!),
+                      title: Text(
+                          widget.knowledgeDetail.member!.memberDisplayname!),
                       subtitle: Text(
-                          'วันที่ ${DateFormat('dd/MM/yyyy').format(DateTime.fromMillisecondsSinceEpoch(knowledgeDetail.timestamp!.millisecondsSinceEpoch))}'),
+                          'วันที่ ${DateFormat('dd/MM/yyyy').format(DateTime.fromMillisecondsSinceEpoch(widget.knowledgeDetail.timestamp!.millisecondsSinceEpoch))}'),
                       isThreeLine: true,
                     ),
                   ),
@@ -108,21 +127,58 @@ class KnowledgeDetailView extends StatelessWidget {
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemCount: knowledgeDetail.images.length,
+                      itemCount: widget.knowledgeDetail.images.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.network(
-                          knowledgeDetail.images[index],
+                          widget.knowledgeDetail.images[index],
                           fit: BoxFit.fitWidth,
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: 24),
+                  _videoController.value.isInitialized
+                      ? AspectRatio(
+                          aspectRatio: _videoController.value.aspectRatio,
+                          child: Stack(
+                            children: [
+                              VideoPlayer(_videoController),
+                              Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                color: Colors.transparent,
+                                child: IconButton(
+                                  icon: _videoController.value.isPlaying
+                                      ? Icon(
+                                          Icons.pause,
+                                          color: Colors.transparent,
+                                        )
+                                      : CircleAvatar(
+                                          backgroundColor:
+                                              Colors.grey.withOpacity(0.8),
+                                          foregroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.play_arrow,
+                                            size: 24,
+                                          ),
+                                        ),
+                                  onPressed: () => setState(() {
+                                    _videoController.value.isPlaying
+                                        ? _videoController.pause()
+                                        : _videoController.play();
+                                  }),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 48),
                     child: Text(
-                      'อำเภอ : ${knowledgeDetail.address?.subDistrict?.name ?? ''}',
+                      'อำเภอ : ${widget.knowledgeDetail.address?.subDistrict?.name ?? ''}',
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
@@ -130,7 +186,7 @@ class KnowledgeDetailView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 48),
                     child: Text(
-                      knowledgeDetail.knowledgeContent!,
+                      widget.knowledgeDetail.knowledgeContent!,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),

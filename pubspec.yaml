@@ -38,6 +38,7 @@ dependencies:
   universal_io: ^2.0.4
   path_provider: ^2.0.3
   flutter_easyloading: ^3.0.3
+  video_player: ^2.2.5
 
   # Firebase products
   firebase_core: "^1.4.0"

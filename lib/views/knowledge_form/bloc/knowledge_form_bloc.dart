@@ -57,8 +57,8 @@ class KnowledgeFormBloc
         if (knowledgeInfo!.category == null)
           knowledgeInfo!.category = categories[0];
 
-        var result = await KnowledgeServices()
-            .addKnowledge(knowledgeInfo!, imagesByte: event.images);
+        var result = await KnowledgeServices().addKnowledge(knowledgeInfo!,
+            imagesByte: event.images, videoFile: event.video);
         await uiFeedback.hideLoading();
         if (result != null) yield KnowledgeAddSuccess();
       } else if (event is KnowledgeChangedCategory) {

@@ -24,14 +24,10 @@ class AnnouncementCard extends StatelessWidget {
                 announcement.image != null
                     ? Expanded(
                         flex: 3,
-                        child: Row(
-                          children: [
-                            Image.network(
-                              announcement.image!,
-                              fit: BoxFit.cover,
-                              alignment: Alignment.center,
-                            ),
-                          ],
+                        child: Image.network(
+                          announcement.image!,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
                         ),
                       )
                     : Container(),

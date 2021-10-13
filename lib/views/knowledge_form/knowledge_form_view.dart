@@ -274,7 +274,7 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                 'knowledge data title -> ${knowledgeData.knowledgeTitle}');
                             context.read<KnowledgeFormBloc>().add(
                                 KnowledgeFormSubmitted(knowledgeData,
-                                    images: _imagesWidget));
+                                    images: _imagesWidget, video: _videoFile));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),

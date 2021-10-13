@@ -10,6 +10,7 @@ class Knowledge {
   Category? category;
   Clip? clip;
   List<String> images;
+  String? videoPath;
   Member? member;
   String? status;
   Timestamp? timestamp;
@@ -24,6 +25,7 @@ class Knowledge {
     this.category,
     this.clip,
     required this.images,
+    this.videoPath,
     this.member,
     this.status,
     this.timestamp,
@@ -44,6 +46,7 @@ class Knowledge {
             ? Member.fromMinimalJson(json['member'])
             : null,
         images = json['images'] != null ? json['images'].cast<String>() : [],
+        videoPath = json['video_path'] != null ? json['video_path'] : '',
         status = json['status'],
         timestamp = json['timestamp'],
         address =

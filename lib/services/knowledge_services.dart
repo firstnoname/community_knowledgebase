@@ -60,7 +60,7 @@ class KnowledgeServices {
   }
 
   Future<Knowledge?> addKnowledge(Knowledge knowledge,
-      {List<Uint8List>? imagesByte}) async {
+      {List<Uint8List>? imagesByte, var videoFile}) async {
     CollectionReference knowledgebaseCollection =
         FirebaseFirestore.instance.collection('knowledgebase');
     return await knowledgebaseCollection
@@ -68,18 +68,29 @@ class KnowledgeServices {
         .then((value) async {
       knowledge.knowledgeId = value.id;
 
+      var path = "knowledge_images/${value.id}";
+      var imagePath = '';
+      var videoPath = '';
+
+      if (videoFile != null) {
+        videoPath =
+            await ImageServices().uploadVideo(videoFile, '$path/${value.id}');
+      }
+
       if (imagesByte != null) {
-        var path = "knowledge_images/${value.id}";
-        var imagePath = '';
+        imagePath = '';
         for (int i = 0; i < imagesByte.length; i++) {
           imagePath =
               await ImageServices().uploadFile(imagesByte[i], '$path/$i');
           knowledge.images.add(imagePath);
         }
+      }
+
+      if (videoPath != '' || imagePath != '') {
         await FirebaseFirestore.instance
             .collection(collectionName)
             .doc(knowledge.knowledgeId)
-            .update({'images': knowledge.images});
+            .update({'images': knowledge.images, 'video_path': videoPath});
       }
       return knowledge;
     }).catchError((e) {

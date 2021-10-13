@@ -3,25 +3,25 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "b3476f2fd52f1d57db49c96fa6f6ce70",
-"assets/assets/images/camt_horizontal.jpg": "2c5441e64d7bc4d78d01182357b33e1e",
-"assets/assets/images/camt_vertical.jpg": "656073db30294d749b4a22bf21e40eef",
-"assets/assets/images/camt_vertical.png": "3409abd156e4cdfc08ae50eb8e50a35c",
-"assets/assets/json/amphoes.json": "e75b971791c31ca67e27ff781e840b02",
-"assets/assets/json/changwats.json": "3ee115aa436c540533e370bf59255c0b",
-"assets/assets/json/tambons.json": "7c6ec29d5942d72bd6e8436d3fae5ce6",
-"assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
-"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"assets/NOTICES": "123435c9207d7157c8ba6d5840a442d9",
-"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
+  "version.json": "2285787904392d7afc6c36f4cdc856c5",
+"index.html": "166734cdbc6baa692c13e21c2904c4bc",
+"/": "166734cdbc6baa692c13e21c2904c4bc",
+"main.dart.js": "37151301cdb0c142e4081bf44f893710",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"index.html": "e5e49855a91450a01409dcd9f47088a4",
-"/": "e5e49855a91450a01409dcd9f47088a4",
-"main.dart.js": "6adb0bcbefddb1a243279962739ef6bc",
-"manifest.json": "cda7428fca1536fda13c287bf9113204",
-"version.json": "2285787904392d7afc6c36f4cdc856c5"
+"manifest.json": "4f93a7919fdc4aaa0c109363d6e4ee62",
+"assets/AssetManifest.json": "b3476f2fd52f1d57db49c96fa6f6ce70",
+"assets/NOTICES": "20c05c02670dc33e6c98c584353571ed",
+"assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
+"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
+"assets/assets/images/camt_horizontal.jpg": "2c5441e64d7bc4d78d01182357b33e1e",
+"assets/assets/images/camt_vertical.jpg": "656073db30294d749b4a22bf21e40eef",
+"assets/assets/images/camt_vertical.png": "3409abd156e4cdfc08ae50eb8e50a35c",
+"assets/assets/json/amphoes.json": "a48983c57b1144ff61b72af8f18eb810",
+"assets/assets/json/tambons.json": "7eb49d93f0fb87eaf9e89e70a0cbe627",
+"assets/assets/json/changwats.json": "948391263cf54ef659a1b8d230282e81"
 };
 
 // The application shell files that are downloaded before a service worker can
