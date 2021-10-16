@@ -56,4 +56,23 @@ class UserServices {
     }
     return member;
   }
+
+  Future<bool> changeUserStatus(
+      {required String userId, required bool isAdmin}) async {
+    bool isSuccess = false;
+
+    String userStatus = isAdmin == true ? 'admin' : 'user';
+
+    try {
+      await FirebaseFirestore.instance
+          .collection(collectionName)
+          .doc(userId)
+          .update({'member_status': userStatus}).then(
+              (value) => isSuccess = true);
+    } catch (e) {
+      print('Change status failed');
+    }
+
+    return isSuccess;
+  }
 }

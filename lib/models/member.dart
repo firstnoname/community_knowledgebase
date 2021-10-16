@@ -31,7 +31,7 @@ class Member {
   });
 
   factory Member.fromJson(dynamic json) => Member(
-        memberId: json['member_id'],
+        memberId: json['id'],
         memberDisplayname: json['member_display_name'],
         memberFirsname: json['member_firstname'],
         memberLastname: json['member_lastname'],

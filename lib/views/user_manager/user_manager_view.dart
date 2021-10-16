@@ -4,9 +4,14 @@ import 'package:community_knowledgebase/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserManagerView extends StatelessWidget {
-  const UserManagerView({Key? key}) : super(key: key);
+class UserManagerView extends StatefulWidget {
+  UserManagerView({Key? key}) : super(key: key);
 
+  @override
+  State<UserManagerView> createState() => _UserManagerViewState();
+}
+
+class _UserManagerViewState extends State<UserManagerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,28 +37,9 @@ class UserManagerView extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: users.length,
-                  itemBuilder: (context, index) => Card(
-                    child: ListTile(
-                      // leading: FlutterLogo(size: 56.0),
-                      title: Text('${users[index].memberDisplayname}'),
-                      subtitle: Text('${users[index].memberStatus}'),
-                      trailing: AnimatedToggle(
-                        values: ['User', 'Admin'],
-                        onToggleCallback: (value) {
-                          // setState(() {
-                          //   _toggleValue = value;
-                          // });
-                        },
-                        buttonColor: const Color(0xFF0A3157),
-                        backgroundColor: const Color(0xFFB5C1CC),
-                        textColor: const Color(0xFFFFFFFF),
-                      ),
-                      // trailing: Switch(
-                      //   value: false,
-                      //   onChanged: (value) {},
-                      // ),
-                    ),
-                  ),
+                  itemBuilder: (context, index) {
+                    return SwitchableUserRole(user: users[index]);
+                  },
                 ),
               );
             } else if (state is UserManagerStateFailure) {
