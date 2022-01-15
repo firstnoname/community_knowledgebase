@@ -71,18 +71,6 @@ class IndexView extends StatelessWidget {
                 member.memberStatus == 'admin'
                     ? TextButton(
                         onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AnnouncementForm(),
-                          ),
-                        ),
-                        child: Text('เพิ่มประกาศ',
-                            style: TextStyle(color: Colors.white)),
-                      )
-                    : Container(),
-                member.memberStatus == 'admin'
-                    ? TextButton(
-                        onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => VerificationView(),
@@ -99,15 +87,26 @@ class IndexView extends StatelessWidget {
                   child: Text('ประเด็นสนทนา',
                       style: TextStyle(color: Colors.white)),
                 ),
+                member.memberStatus == 'admin'
+                    ? TextButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AnnouncementForm(),
+                          ),
+                        ),
+                        child: Text('เพิ่มประกาศ',
+                            style: TextStyle(color: Colors.white)),
+                      )
+                    : Container(),
                 TextButton(
                     onPressed: () {},
                     child: Text('ติดต่อเรา',
                         style: TextStyle(color: Colors.white))),
-                IconButton(
-                  onPressed: () =>
-                      context.read<IndexBloc>().add(LogoutPressed()),
-                  icon: Icon(Icons.logout),
-                ),
+                TextButton(
+                    onPressed: () =>
+                        context.read<IndexBloc>().add(LogoutPressed()),
+                    child: Text('ออกจากระบบ')),
               ],
             ),
             body: Container(
@@ -118,11 +117,12 @@ class IndexView extends StatelessWidget {
                     SizedBox(height: 36),
                     Text(
                       'คลังความรู้ชุมชน',
-                      style: TextStyle(fontSize: 36),
+                      style:
+                          TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 16),
                     Text(
-                      'ร่วมแบ่งปันความรู้แก่สมาชิก',
+                      'ร่วมแบ่งปันความรู้ เพื่อสร้างชุมชมที่เข้มแข็งและยั่งยืน',
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: 36),
@@ -138,7 +138,7 @@ class IndexView extends StatelessWidget {
                           (index) {
                             return FittedBox(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(36),
                                 child: Container(
                                   height: _height,
                                   width: _width,
@@ -182,6 +182,16 @@ class IndexView extends StatelessWidget {
                     SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('ข่าวประชาสัมพันธ์',
+                              style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -194,38 +204,57 @@ class IndexView extends StatelessWidget {
                                     context: context,
                                     builder: (context) => AlertDialog(
                                       title: Text(announcement.title),
-                                      content: SingleChildScrollView(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(announcement.content),
-                                            announcement.image != null
-                                                ? Image.network(
-                                                    announcement.image!,
-                                                    fit: BoxFit.contain,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                  )
-                                                : Container(),
-                                            ListTile(
-                                              title: Text(
-                                                  'สร้างโดย : ${announcement.member.memberDisplayname}'),
-                                              subtitle: Text(announcement
-                                                      .createDate
-                                                      ?.toDate()
-                                                      .toString() ??
-                                                  ''),
-                                            ),
-                                          ],
+                                      content: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(announcement.content),
+                                              announcement.images?.isNotEmpty ==
+                                                      true
+                                                  ? Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8,
+                                                          vertical: 16),
+                                                      child: Row(
+                                                        children: announcement
+                                                            .images!
+                                                            .map((image) =>
+                                                                Image.network(
+                                                                  image,
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                  height: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      7,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      7,
+                                                                ))
+                                                            .toList(),
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                              ListTile(
+                                                title: Text(
+                                                    'สร้างโดย : ${announcement.member.memberDisplayname}'),
+                                                subtitle: Text(announcement
+                                                        .createDate
+                                                        ?.toDate()
+                                                        .toString() ??
+                                                    ''),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       actions: <Widget>[

@@ -1,4 +1,5 @@
 import 'package:community_knowledgebase/models/models.dart';
+import 'package:community_knowledgebase/utilities/app_themes.dart';
 import 'package:flutter/material.dart';
 
 class AnnouncementCard extends StatelessWidget {
@@ -7,8 +8,8 @@ class AnnouncementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width / 5;
-    var height = MediaQuery.of(context).size.width / 6;
+    var width = MediaQuery.of(context).size.width / 6;
+    var height = MediaQuery.of(context).size.width / 7;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -21,11 +22,11 @@ class AnnouncementCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                announcement.image != null
+                announcement.images!.first != null
                     ? Expanded(
                         flex: 3,
                         child: Image.network(
-                          announcement.image!,
+                          announcement.images!.first,
                           fit: BoxFit.cover,
                           alignment: Alignment.center,
                         ),
@@ -35,7 +36,15 @@ class AnnouncementCard extends StatelessWidget {
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(announcement.title),
+                    child: Row(
+                      children: [
+                        Expanded(child: Text('${announcement.title}')),
+                        Text(
+                          'อ่านต่อ',
+                          style: TextStyle(color: primaryColor),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

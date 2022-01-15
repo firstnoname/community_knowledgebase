@@ -39,13 +39,13 @@ class _UserRegisterViewState extends State<UserRegisterView> {
             ),
           ),
         ),
-        title: Text("Sign up", style: TextStyle(color: Colors.white)),
+        title: Text("ลงทะเบียน", style: TextStyle(color: Colors.white)),
       ),
       body: BlocProvider<UserRegisterBloc>(
         create: (context) => UserRegisterBloc(context),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: width / 3, vertical: 48),
-          color: Colors.green[50],
+          // color: Colors.green[50],
           child: Center(
             child: Container(
               decoration: BoxDecoration(
@@ -92,7 +92,7 @@ class _UserRegisterViewState extends State<UserRegisterView> {
       constraints: BoxConstraints.expand(height: 50),
       child: GestureDetector(
         child: Text(
-          "Sign up",
+          "ลงทะเบียน",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
@@ -118,7 +118,7 @@ class _UserRegisterViewState extends State<UserRegisterView> {
       decoration: BoxDecoration(
           color: Colors.yellow[50], borderRadius: BorderRadius.circular(16)),
       child: TextFormField(
-        decoration: InputDecoration.collapsed(hintText: "Email"),
+        decoration: InputDecoration.collapsed(hintText: "อีเมล์"),
         keyboardType: TextInputType.emailAddress,
         style: TextStyle(fontSize: 18),
         onSaved: (value) =>
@@ -138,7 +138,7 @@ class _UserRegisterViewState extends State<UserRegisterView> {
           color: Colors.yellow[50], borderRadius: BorderRadius.circular(16)),
       child: TextFormField(
         obscureText: false,
-        decoration: InputDecoration.collapsed(hintText: "Display name"),
+        decoration: InputDecoration.collapsed(hintText: "ชื่อที่แสดงในระบบ"),
         style: TextStyle(fontSize: 18),
         onSaved: (value) =>
             BlocProvider.of<UserRegisterBloc>(context).displayName = value,
@@ -307,12 +307,12 @@ class _UserRegisterViewState extends State<UserRegisterView> {
           color: Colors.yellow[50], borderRadius: BorderRadius.circular(16)),
       child: TextFormField(
         obscureText: true,
-        decoration: InputDecoration.collapsed(hintText: "Password"),
+        decoration: InputDecoration.collapsed(hintText: "รหัสผ่าน"),
         style: TextStyle(fontSize: 18),
         onSaved: (value) =>
             BlocProvider.of<UserRegisterBloc>(context).password = value,
         validator: (value) {
-          if (value == null || value.isEmpty) return 'Please enter some text';
+          if (value == null || value.isEmpty) return 'กรุณาใส่รหัสผ่าน';
         },
       ),
     );
@@ -326,10 +326,10 @@ class _UserRegisterViewState extends State<UserRegisterView> {
           color: Colors.yellow[50], borderRadius: BorderRadius.circular(16)),
       child: TextFormField(
         obscureText: true,
-        decoration: InputDecoration.collapsed(hintText: "Re-password"),
+        decoration: InputDecoration.collapsed(hintText: "ใส่รหัสผ่านอีกครั้ง"),
         style: TextStyle(fontSize: 18),
         validator: (value) {
-          if (value == null || value.isEmpty) return 'Please enter some text';
+          if (value == null || value.isEmpty) return 'กรุณาใส่รหัสอีกครั้ง';
         },
       ),
     );

@@ -7,7 +7,7 @@ class Announcement {
   String content;
   Member member;
   Timestamp? createDate;
-  String? image;
+  List<String>? images;
 
   Announcement({
     this.id,
@@ -15,7 +15,7 @@ class Announcement {
     required this.content,
     required this.member,
     required this.createDate,
-    this.image,
+    this.images,
   });
 
   factory Announcement.fromJson(dynamic json) => Announcement(
@@ -23,7 +23,7 @@ class Announcement {
         content: json['content'],
         member: Member.fromMinimalJson(json['member']),
         createDate: json['createDate'] ?? null,
-        image: json['image'] ?? null,
+        images: json['images'] != null ? json['images'].cast<String>() : [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,6 +31,6 @@ class Announcement {
         'content': content,
         'member': member.toMinimalJson(),
         'create_date': createDate,
-        'image': image,
+        'images': images,
       };
 }
