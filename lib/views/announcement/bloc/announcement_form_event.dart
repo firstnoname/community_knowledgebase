@@ -9,7 +9,7 @@ class AnnouncementFormEventInprogress extends AnnouncementFormEvent {}
 
 class AnnouncementFormEventSubmitted extends AnnouncementFormEvent {
   final Announcement announcement;
-  final MediaInfo? image;
+  final List<Uint8List>? images;
 
-  AnnouncementFormEventSubmitted(this.announcement, {this.image});
+  AnnouncementFormEventSubmitted(this.announcement, {this.images});
 }

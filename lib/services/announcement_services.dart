@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_knowledgebase/models/announcement.dart';
 import 'package:community_knowledgebase/services/image_services.dart';
@@ -6,8 +8,8 @@ import 'package:image_picker_web/image_picker_web.dart';
 class AnnouncementServices {
   static const collectionName = 'announcements';
 
-  Future<bool> addAnnouncement(
-      Announcement announcement, MediaInfo? image) async {
+  Future<bool> addAnnouncement(Announcement announcement,
+      {List<Uint8List>? imagesByte}) async {
     bool _isSuccess = false;
     var result = await FirebaseFirestore.instance
         .collection(collectionName)
@@ -22,15 +24,25 @@ class AnnouncementServices {
     if (result.id.isNotEmpty) {
       _isSuccess = true;
 
-      var path = "announcements_image/${result.id}";
-      if (image != null) {
-        announcement.image =
-            await ImageServices().uploadFile(image.data!, path);
-        // update announcement in firebase.
+      var path = "announcements_images/${result.id}";
+      var imagePath = '';
+
+      if (imagesByte != null) {
+        announcement.images = [];
+        imagePath = '';
+        for (int i = 0; i < imagesByte.length; i++) {
+          imagePath =
+              await ImageServices().uploadFile(imagesByte[i], '$path/$i');
+          announcement.images!.add(imagePath);
+        }
+      }
+
+      // update announcement in firebase.
+      if (imagePath != '') {
         await FirebaseFirestore.instance
             .collection(collectionName)
             .doc(announcement.id)
-            .update({'image': announcement.image});
+            .update({'images': announcement.images});
       }
     }
 

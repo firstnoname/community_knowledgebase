@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:community_knowledgebase/utilities/constants.dart';
+import 'package:community_knowledgebase/utilities/image_selection.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:html' as html;
 import 'dart:io';
@@ -22,6 +25,7 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
   final _formGK = GlobalKey<FormState>();
   Image? _imageWidget;
   MediaInfo? mediaData;
+  List<Uint8List> _imagesWidget = [];
 
   Future getImage() async {
     mediaData = await ImagePickerWeb.getImageInfo;
@@ -110,26 +114,88 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
                               color: Colors.blueGrey[200],
                               width: 1,
                             ),
-                            Container(
-                              width: 200,
-                              height: 400,
-                              child: GridView.count(
-                                crossAxisCount: 1,
-                                children: [
-                                  Container(
-                                    color: Colors.grey[200],
-                                    child: Stack(
-                                      children: [
-                                        _imageWidget == null
-                                            ? IconButton(
-                                                icon: Icon(Icons.image),
-                                                onPressed: getImage,
-                                              )
-                                            : _imageWidget!,
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                            // Container(
+                            //   width: 200,
+                            //   height: 400,
+                            //   child: GridView.count(
+                            //     crossAxisCount: 1,
+                            //     children: [
+                            //       Container(
+                            //         color: Colors.grey[200],
+                            //         child: Stack(
+                            //           children: [
+                            //             _imageWidget == null
+                            //                 ? IconButton(
+                            //                     icon: Icon(Icons.image),
+                            //                     onPressed: getImage,
+                            //                   )
+                            //                 : _imageWidget!,
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            Expanded(
+                              flex: 2,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  _imagesWidget = await ImageSelection()
+                                      .getMultiImagesBytes(context);
+                                  setState(() {});
+                                },
+                                child: _imagesWidget.length > 0
+                                    ? Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                4,
+                                        height: 400,
+                                        margin: const EdgeInsets.all(15.0),
+                                        padding: const EdgeInsets.all(3.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        child: GridView.count(
+                                          crossAxisCount: 2,
+                                          children: List.generate(
+                                            _imagesWidget.length,
+                                            (index) => Container(
+                                              child: _imagesWidget.length > 0
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Image.memory(
+                                                        _imagesWidget[index],
+                                                      ),
+                                                    )
+                                                  : Container(
+                                                      height: 100,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      child: Icon(
+                                                          Icons.photo_album)),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                4,
+                                        height: 400,
+                                        child: Icon(Icons.photo_album)),
                               ),
                             ),
                           ],
@@ -140,8 +206,9 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
                             print(
                                 'knowledge data title -> ${announcement.title}');
                             context.read<AnnouncementFormBloc>().add(
-                                AnnouncementFormEventSubmitted(announcement,
-                                    image: mediaData));
+                                  AnnouncementFormEventSubmitted(announcement,
+                                      images: _imagesWidget),
+                                );
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),

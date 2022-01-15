@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_knowledgebase/bloc/base_bloc.dart';
@@ -37,7 +38,7 @@ class AnnouncementFormBloc
               (event as AnnouncementFormEventSubmitted).announcement;
           _announcement.member = appManagerBloc.member;
           var result = await AnnouncementServices()
-              .addAnnouncement(_announcement, event.image);
+              .addAnnouncement(_announcement, imagesByte: event.images);
 
           if (result == true) {
             yield AnnouncementFormStateSubmitSuccess();

@@ -46,7 +46,7 @@ class LoginView extends StatelessWidget {
           SizedBox(height: 36),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Email : ',
+              labelText: 'อีเมล์ : ',
               suffixIcon: Icon(Icons.email_outlined),
             ),
             onSaved: (value) => BlocProvider.of<LoginBloc>(ctx).email = value,
@@ -57,7 +57,7 @@ class LoginView extends StatelessWidget {
           ),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Password : ',
+              labelText: 'รหัสผ่าน : ',
               suffixIcon: Icon(Icons.lock_outline),
             ),
             obscureText: true,
@@ -72,7 +72,7 @@ class LoginView extends StatelessWidget {
           GestureDetector(
             child: Container(
               constraints: BoxConstraints.expand(height: 50),
-              child: Text("Sign in",
+              child: Text("เข้าสู่ระบบ",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18, color: Colors.white)),
               decoration: BoxDecoration(
@@ -97,7 +97,7 @@ class LoginView extends StatelessWidget {
                 Expanded(child: Divider(color: Colors.green[800])),
                 Padding(
                     padding: EdgeInsets.all(6),
-                    child: Text("Don’t have an account?",
+                    child: Text("ยังไม่มีบัญชีใช่หรือไม่?",
                         style: TextStyle(color: Colors.black87))),
                 Expanded(child: Divider(color: Colors.green[800])),
               ],
@@ -106,7 +106,7 @@ class LoginView extends StatelessWidget {
           GestureDetector(
             child: Container(
               constraints: BoxConstraints.expand(height: 50),
-              child: Text("Sign up",
+              child: Text("ลงทะเบียน",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18, color: Colors.white)),
               decoration: BoxDecoration(

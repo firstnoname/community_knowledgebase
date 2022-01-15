@@ -3,6 +3,7 @@ import 'dart:html' as html;
 import 'dart:typed_data';
 import 'package:community_knowledgebase/models/models.dart';
 import 'package:community_knowledgebase/utilities/constants.dart';
+import 'package:community_knowledgebase/utilities/image_selection.dart';
 import 'package:community_knowledgebase/utilities/ui_feedback.dart';
 import 'package:path/path.dart' as Path;
 
@@ -200,7 +201,10 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      await getMultiImagesBytes();
+                                      // await getMultiImagesBytes();
+                                      // setState(() {});
+                                      _imagesWidget = await ImageSelection()
+                                          .getMultiImagesBytes(context);
                                       setState(() {});
                                     },
                                     child: _imagesWidget.length > 0
