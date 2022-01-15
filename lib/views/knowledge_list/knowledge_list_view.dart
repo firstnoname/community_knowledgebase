@@ -152,7 +152,13 @@ class _KnowledgeListViewState extends State<KnowledgeListView> {
                                 const SizedBox(width: 8),
                                 TextButton(
                                   child: const Text('อ่านต่อ ...'),
-                                  onPressed: () {/* ... */},
+                                  onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            KnowledgeDetailView(
+                                                knowledgeList[index], () {}),
+                                      )),
                                 ),
                                 const SizedBox(width: 8),
                               ],

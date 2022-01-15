@@ -81,6 +81,7 @@ class _TopicDetailViewState extends State<TopicDetailView> {
                                 padding: const EdgeInsets.all(16.0),
                                 child: Text(
                                   widget.topic.topicTitle ?? '',
+                                  style: TextStyle(fontSize: 36),
                                 ),
                               ),
                               Padding(
@@ -218,12 +219,17 @@ class _TopicDetailViewState extends State<TopicDetailView> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Expanded(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                controller: _textCommentController,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  controller: _textCommentController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'พิม์ความคิดเห็นที่นี่',
+                                  ),
+                                ),
                               ),
-                            )),
+                            ),
                             const SizedBox(width: 8),
                             TextButton(
                               child: const Text('แสดงความคิดเห็น'),

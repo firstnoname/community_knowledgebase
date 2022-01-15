@@ -76,7 +76,11 @@ class TopicListView extends StatelessWidget {
                           ListTile(
                             leading: Icon(Icons.album),
                             title: Text('${topics[index].topicTitle}'),
-                            subtitle: Text('${topics[index].topicDetail}'),
+                            subtitle: Text(
+                              '${topics[index].topicDetail}',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -86,7 +90,19 @@ class TopicListView extends StatelessWidget {
                               const SizedBox(width: 8),
                               TextButton(
                                 child: Text('อ่านต่อ ... '),
-                                onPressed: () {/* ... */},
+                                onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => TopicDetailView(
+                                      topics[index],
+                                      callBackInit: () {
+                                        context
+                                            .read<TopicListBloc>()
+                                            .add(TopicListInitial());
+                                      },
+                                    ),
+                                  ),
+                                ),
                               ),
                               const SizedBox(width: 8),
                             ],

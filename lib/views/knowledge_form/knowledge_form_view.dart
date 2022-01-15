@@ -247,8 +247,14 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                                                   Colors.grey,
                                                             ),
                                                           ),
-                                                          child: Icon(Icons
-                                                              .photo_album)),
+                                                          child: Column(
+                                                            children: [
+                                                              Icon(Icons
+                                                                  .photo_album),
+                                                              Text(
+                                                                  'เลือกรูปภาพไม่เกิน 5 รูป')
+                                                            ],
+                                                          )),
                                                 ),
                                               ),
                                             ),

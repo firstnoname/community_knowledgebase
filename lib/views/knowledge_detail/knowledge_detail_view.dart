@@ -63,10 +63,14 @@ class _KnowledgeDetailViewState extends State<KnowledgeDetailView> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.check,
+                            child: ElevatedButton(
+                              child: Text(
+                                'ยืนยันการเผยแพร่ข้อมูล',
+                                style: TextStyle(color: Colors.blue),
                               ),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white)),
                               onPressed: () =>
                                   context.read<KnowledgeDetailBloc>().add(
                                         KnowledgeAccepted(),
@@ -79,10 +83,16 @@ class _KnowledgeDetailViewState extends State<KnowledgeDetailView> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.cancel,
+                            child: ElevatedButton(
+                              child: Text(
+                                'ข้อมูลไม่สมบูรณ์',
+                                style: TextStyle(
+                                  color: Colors.redAccent,
+                                ),
                               ),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white)),
                               onPressed: () => context
                                   .read<KnowledgeDetailBloc>()
                                   .add(KnowledgeEjected()),

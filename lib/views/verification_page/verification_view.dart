@@ -39,12 +39,21 @@ class _VerificationViewState extends State<VerificationView> {
               title: Text('จัดการองค์ความรู้ '),
               centerTitle: true,
               actions: [
-                IconButton(
-                  onPressed: () {
-                    showSearch(
-                        context: context, delegate: Search(knowledgeList));
-                  },
-                  icon: Icon(Icons.search),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          showSearch(
+                              context: context,
+                              delegate: Search(knowledgeList));
+                        },
+                        icon: Icon(Icons.search),
+                      ),
+                      Text('ค้นหา')
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -87,7 +96,18 @@ class _VerificationViewState extends State<VerificationView> {
                             const SizedBox(width: 8),
                             TextButton(
                               child: const Text('อ่านต่อ ...'),
-                              onPressed: () {/* ... */},
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => KnowledgeDetailView(
+                                      knowledgeList[index],
+                                      () {
+                                        context
+                                            .read<VerificationBloc>()
+                                            .add(VerficationInitial());
+                                      },
+                                    ),
+                                  )),
                             ),
                             const SizedBox(width: 8),
                           ],
