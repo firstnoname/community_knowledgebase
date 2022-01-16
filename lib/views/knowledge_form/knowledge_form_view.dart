@@ -254,7 +254,8 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                                               Text(
                                                                   'เลือกรูปภาพไม่เกิน 5 รูป')
                                                             ],
-                                                          )),
+                                                          ),
+                                                        ),
                                                 ),
                                               ),
                                             ),
@@ -270,7 +271,15 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                                     .width /
                                                 4,
                                             height: 400,
-                                            child: Icon(Icons.photo_album)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.photo_album),
+                                                Text('เลือกรูปภาพไม่เกิน 5 รูป')
+                                              ],
+                                            ),
+                                          ),
                                   ),
                                 ],
                               ),

@@ -179,8 +179,18 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
                                                           color: Colors.grey,
                                                         ),
                                                       ),
-                                                      child: Icon(
-                                                          Icons.photo_album)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(Icons
+                                                              .photo_album),
+                                                          Text(
+                                                              'เลือกรูปภาพไม่เกิน 5 รูป')
+                                                        ],
+                                                      ),
+                                                    ),
                                             ),
                                           ),
                                         ),
@@ -195,7 +205,15 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
                                             MediaQuery.of(context).size.width /
                                                 4,
                                         height: 400,
-                                        child: Icon(Icons.photo_album)),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.photo_album),
+                                            Text('เลือกรูปภาพไม่เกิน 5 รูป')
+                                          ],
+                                        ),
+                                      ),
                               ),
                             ),
                           ],
