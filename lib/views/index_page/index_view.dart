@@ -2,7 +2,6 @@ import 'package:community_knowledgebase/utilities/constants.dart';
 
 import '../../models/models.dart';
 import '../../views/index_page/bloc/index_bloc.dart';
-import '../../views/topic_list/topic_list_view.dart';
 import '../../views/views.dart';
 import '../../widgets/widgets.dart';
 

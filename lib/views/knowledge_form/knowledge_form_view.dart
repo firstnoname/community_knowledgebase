@@ -201,8 +201,6 @@ class _KnowledgeFormViewState extends State<KnowledgeFormView> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      // await getMultiImagesBytes();
-                                      // setState(() {});
                                       _imagesWidget = await ImageSelection()
                                           .getMultiImagesBytes(context);
                                       setState(() {});
